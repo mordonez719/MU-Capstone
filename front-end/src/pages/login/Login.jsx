@@ -2,7 +2,7 @@ import './Login.css'
 import { useState } from 'react'
 // import { FaUser } from "node_modules/react-icons/fa"
 
-function Login() {
+function Login(props) {
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
     const [result, setResult] = useState("")
@@ -31,6 +31,7 @@ function Login() {
             console.log(response)
             if (response.ok) {
                 setResult("sign up success!");
+                props.setUser(user);
             }
             else{
                 setResult("failed to create an account")
@@ -57,6 +58,7 @@ function Login() {
             // console.log(response)
             if (response.ok) {
                 setResult("log in success!");
+                props.setUser(user);
             }
             else{
                 setResult("failed to find matching account")
@@ -73,7 +75,7 @@ function Login() {
             {/* <FaUser/> */}
             <br></br>
             {/* <br></br> */}
-            <p>Log in or Sign Up to get started</p>
+            <p id="intro">Log in or Sign Up to get started</p>
             <div>
                 {/* <label>username: </label> */}
                 <input onChange={handleChangeUser} value={user} placeholder='Username...'></input>

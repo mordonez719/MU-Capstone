@@ -1,0 +1,32 @@
+footer {
+    color: black;
+    background-color: #ddcfff;
+  }
+  
+header {
+    color: black;
+    padding: 10px;
+    background-color: #ddcfff;
+}
+
+
+#main {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+#profile-name {
+    /* position: absolute; */
+    /* margin-top: 0;
+    right: 10px;
+    top: 10px; */
+    margin-left: 25%;
+    color: black;
+    align-self: flex-end;
+}
+
+#head-content {
+    display: flex;
+    justify-content: center;
+}

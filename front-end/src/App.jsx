@@ -1,19 +1,24 @@
 import { useState } from 'react'
 import './App.css'
-import Login from './Login'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Login from './pages/login/Login'
+import MainPage from './pages/main/MainPage'
 
 function App() {
+  const [user, setUser] = useState("")
 
   return (
+    <BrowserRouter>
     <div id="main-content-holder">
-      <header>Capstone</header>
       <main>
-        <Login />
+        <Routes>
+          <Route path="/" element={user ? <MainPage user={user}/> : <Login setUser={setUser}/>} />
+        </Routes>
       </main>
-      <footer>
-        Tabs Here
-      </footer>
     </div>
+    </BrowserRouter>
   )
 }
 
