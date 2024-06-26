@@ -1,0 +1,24 @@
+#login-block{
+    height: 50%;
+    width: 50%;
+    background-color: #ddcfff;
+    margin-left: 25%;
+    border-radius: 7px;
+    color: black;
+    min-height: fit-content;
+}
+
+button{
+    width: fit-content;
+    margin: 2%;
+    margin-top: 7%;
+    font-size: 8px;
+}
+
+p {
+    margin-top: 40%;
+}
+
+input{
+    margin-top: 3%;
+}
