@@ -26,6 +26,7 @@ function Login(props) {
                 user,
                 password,
             }),
+            // credentials: 'include'
         })
         .then(response => {
             console.log(response)
@@ -53,6 +54,7 @@ function Login(props) {
                 user,
                 password,
             }),
+            // credentials: 'include'
         })
         .then(response => {
             // console.log(response)
