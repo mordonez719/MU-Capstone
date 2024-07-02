@@ -87,8 +87,8 @@ function Login(props) {
                 <input onChange={handleChangePassword} value={password} placeholder='Password...'></input>
             </div>
             <span>
-                <button onClick={handleLogIn}>Log In</button>
-                <button onClick={handleSignUp}>Sign Up</button>
+                <button className="login-button" onClick={handleLogIn}>Log In</button>
+                <button className="login-button" onClick={handleSignUp}>Sign Up</button>
             </span>
             <div>
                 {result && <p>{result}</p>}

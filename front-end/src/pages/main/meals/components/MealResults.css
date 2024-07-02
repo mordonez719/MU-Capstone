@@ -1,0 +1,30 @@
+#api-meals{
+    height: 90%;
+    width: 75%;
+    outline: 2px dashed #ddcfff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0%;
+    overflow: scroll;
+}
+
+#menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#create-plan{
+    /* justify-self: flex-end; */
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 7px;
+}
+
+#search-bar{
+    margin: 0 auto;
+    margin-left: 42%;
+    margin-top: 5px;
+}

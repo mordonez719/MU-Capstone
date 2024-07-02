@@ -1,8 +1,8 @@
 import './MainPage.css'
-import HomePage from './HomePage';
+import HomePage from './home/HomePage';
 import { useState } from 'react';
-import WorkoutsPage from './WorkoutsPage';
-import MealsPage from './MealsPage';
+import WorkoutsPage from './workouts/WorkoutsPage';
+import MealsPage from './meals/MealsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 

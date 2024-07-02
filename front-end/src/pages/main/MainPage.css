@@ -3,6 +3,8 @@ footer {
     background-color: #ddcfff;
     display: flex;
     justify-content: space-evenly;
+    /* position: absolute; */
+    /* margin-bottom: 0%; */
   }
   
 header {
