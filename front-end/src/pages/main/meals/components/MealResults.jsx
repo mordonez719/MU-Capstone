@@ -6,9 +6,8 @@ function MealResults(){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const baseURL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973%09&diet=balanced&calories=0-700&imageSize=LARGE"
-
     const fetchData = async (query) => {
+        const baseURL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973`
 
         const options = {
             method: "GET",
@@ -29,8 +28,11 @@ function MealResults(){
     const handleSearchChange = (value) => {
         console.log("changing")
         setSearchQuery(value);
-        fetchData(value);
     };
+
+    const handleSearch = () => {
+        fetchData(searchQuery);
+    }
 
     let meals = []
 
@@ -45,11 +47,13 @@ function MealResults(){
     return (
         <section id="api-meals">
             <div id="menu">
+            <section id="searcher">
+                <span className="material-symbols-outlined" onClick={() => handleSearch()}>search</span>
                 <input type="text" id="search-bar"
                 value={searchQuery} 
                 onChange={(e) => handleSearchChange(e.target.value)} 
                 placeholder="Search Meals..." />
-                <button id="create-plan">Create a Meal Plan</button>
+            </section>
             </div>
             {meals}
         </section>
