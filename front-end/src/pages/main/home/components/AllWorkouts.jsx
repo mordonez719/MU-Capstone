@@ -1,16 +1,15 @@
 import './AllWorkouts.css'
-import CreateWorkout from '../../workouts/components/CreateWorkout'
 import { useState } from 'react';
+import WorkoutCard from './WorkoutCard';
 
 function AllWorkouts(){
-    const [form, setForm] = useState(0);
-
     return (
     <>
         <section id="all-workouts">
-        <button id="create-wk" onClick={() => setForm(1)}>Create a Workout</button>
+            <WorkoutCard />
+            <WorkoutCard />
+            <WorkoutCard />
         </section>
-        <CreateWorkout form={form} setForm={setForm}/>
     </>
     )
 }

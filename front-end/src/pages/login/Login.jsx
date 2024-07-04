@@ -1,6 +1,18 @@
+/*
+
+Login.jsx
+
+Displayes login form. Stores username in state variable.
+Sign up stores username and password in database. Log in
+searches for given username and tests if given password matches.
+
+Calls: 
+Called In: App
+
+*/
+
 import './Login.css'
 import { useState } from 'react'
-// import { FaUser } from "node_modules/react-icons/fa"
 
 function Login(props) {
     const [user, setUser] = useState("")
@@ -14,7 +26,8 @@ function Login(props) {
     const handleChangePassword = (e) => {
         setPassword(e.target.value)
     }
-    
+
+    // encrypts password and add the username, password pair to the database
     const handleSignUp = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
         {
@@ -26,10 +39,8 @@ function Login(props) {
                 user,
                 password,
             }),
-            // credentials: 'include'
         })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 setResult("sign up success!");
                 props.setUser(user);
@@ -43,6 +54,7 @@ function Login(props) {
         });
     }
 
+    // find username, tests if password matches encrypted password that was stored
     const handleLogIn = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
         {
@@ -54,10 +66,8 @@ function Login(props) {
                 user,
                 password,
             }),
-            // credentials: 'include'
         })
         .then(response => {
-            // console.log(response)
             if (response.ok) {
                 setResult("log in success!");
                 props.setUser(user);
@@ -74,16 +84,13 @@ function Login(props) {
     return (
         <section id="login-block">
             <h2>Capstone Project</h2>
-            {/* <FaUser/> */}
+            <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
-            {/* <br></br> */}
             <p id="intro">Log in or Sign Up to get started</p>
             <div>
-                {/* <label>username: </label> */}
                 <input onChange={handleChangeUser} value={user} placeholder='Username...'></input>
             </div>
             <div>
-                {/* <label>password: </label> */}
                 <input onChange={handleChangePassword} value={password} placeholder='Password...'></input>
             </div>
             <span>

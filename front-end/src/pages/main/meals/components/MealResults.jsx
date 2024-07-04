@@ -21,12 +21,10 @@ function MealResults(){
         const response = await fetch(baseURL, options);
         const data = await response.json();
 
-        console.log(data.hits)
         fillData(data.hits);
     }
 
     const handleSearchChange = (value) => {
-        console.log("changing")
         setSearchQuery(value);
     };
 

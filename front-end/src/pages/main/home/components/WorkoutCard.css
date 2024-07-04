@@ -1,0 +1,14 @@
+.home-card{
+    width: 10%;
+    height: 90%;
+    margin-left: 8px;
+    background-color: #ddcfff;
+    color: black;
+    align-self: center;
+    display: flex;
+    align-content: center;
+}
+
+.wk-title{
+    margin-left: 0px;
+}

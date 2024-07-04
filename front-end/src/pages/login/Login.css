@@ -15,10 +15,10 @@
     font-size: 8px;
 }
 
-#intro {
-    margin-top: 40%;
-}
-
 input{
     margin-top: 3%;
+}
+
+#person-icon{
+    font-size: xxx-large;
 }

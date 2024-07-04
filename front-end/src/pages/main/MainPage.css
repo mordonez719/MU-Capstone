@@ -3,8 +3,6 @@ footer {
     background-color: #ddcfff;
     display: flex;
     justify-content: space-evenly;
-    /* position: absolute; */
-    /* margin-bottom: 0%; */
   }
   
 header {
@@ -17,34 +15,20 @@ header {
 #main {
     height: 100%;
     width: 100%;
-    /* display: flex; */
     align-items: center;
 }
 
 #profile-name {
-    /* position: absolute; */
-    /* margin-top: 0;
-    right: 10px;
-    top: 10px; */
-    /* margin-left: 25%; */
     color: black;
-    /* align-self: flex-start; */
 }
 
 #logout-button {
-    /* position: absolute; */
-    /* margin-top: 0;
-    right: 10px;
-    top: 10px; */
-    /* margin-left: 25%; */
     color: black;
-    /* align-self: flex-end; */
 }
 
 #head-content {
     display: flex;
     justify-content: space-evenly;
-    /* justify-content: center; */
 }
 
 #title {

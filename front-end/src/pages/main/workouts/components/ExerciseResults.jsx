@@ -1,7 +1,7 @@
 import './ExerciseResults.css'
 import ExerciseCard from './ExerciseCard'
 import { useEffect, useState } from 'react'
-import CreateWorkout from './CreateWorkout';
+import CreateWorkout from '../../home/components/CreateWorkout';
 
 function ExerciseResults(){
     const [apiData, fillData] = useState([]);
@@ -25,7 +25,6 @@ function ExerciseResults(){
         const response = await fetch(apiURL, options);
         const data = await response.json();
 
-        console.log(data)
         fillData(data);
 
     }

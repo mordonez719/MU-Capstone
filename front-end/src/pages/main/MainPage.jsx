@@ -1,18 +1,33 @@
+/*
+
+Main.jsx
+
+Sets up header, content, and tabs. Header displayes the username
+of the current user and allows the user to log out.
+The main content displayed switches between the home, 
+meals, and exercise pages depending on the active tab selected 
+by the user.
+
+Calls: HomePage, WorkoutsPage, MealsPage
+Called In: App
+
+*/
+
 import './MainPage.css'
 import HomePage from './home/HomePage';
 import { useState } from 'react';
 import WorkoutsPage from './workouts/WorkoutsPage';
 import MealsPage from './meals/MealsPage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-
 
 function MainPage(props){
     const [tabState, setTab] = useState(0);
+    
+    // sets active tab based on what the user clicks
     const toggleTab = (page) => {
           setTab(page);
       }
 
+    // resets the user state variable, signing the user out
     const handleLogOut = () => {
         props.setUser("");
     }

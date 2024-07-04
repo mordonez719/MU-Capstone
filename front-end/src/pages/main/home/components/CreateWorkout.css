@@ -1,15 +1,22 @@
 #wk-form-container{
     height: 50%;
-    width: 20%;
+    width: 50%;
     position: absolute;
-    right: 0;
-    top: 10%;
+    right: 25%;
+    top: 25%;
     background-color: #ddcfff;
     outline: 1px solid black;
 }
 
 #close-form{
+    position: absolute;
+    right: 5px;
+    top: 5px;
     font-size: xx-small;
     width: fit-content;
     height: fit-content;
+}
+
+#wk-form{
+    display: block;
 }
