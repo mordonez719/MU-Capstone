@@ -16,4 +16,22 @@ datasource db {
 model User {
   user  String @id
   hashedPassword String
+  workouts Workout[]
+  plans Plan[]
+}
+
+model Workout {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  username String
+  user User @relation(fields: [username], references: [user])
+}
+
+model Plan {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  username String
+  user User @relation(fields: [username], references: [user])
 }

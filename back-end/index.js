@@ -18,6 +18,7 @@ app.use(express.json()); // Middleware for parsing JSON bodies from HTTP request
 
 const sessions = {};
 
+// user authorization routing
 app.post("/create", async (req, res) => {
     const {user, password} = req.body;
     bcrypt.hash(password, saltRounds, async function(err, hashed) {
@@ -64,6 +65,79 @@ app.post("/login", async (req, res) => {
 app.post("/logout", async (req, res) => {
     res.clearCookie('session-cookie');
 })
+
+
+// create a workout for a specific user
+app.post('/user/workout', async (req, res) => {
+    const {id, title, description, username} = req.body;
+    const newWorkout = await prisma.workout.create({
+        data: {
+            id,
+            title,
+            description,
+            username
+        }
+    })
+    res.status(201).json(newWorkout)
+});
+
+// create a meal plan for a specific user
+app.post('/user/plan', async (req, res) => {
+    const {id, title, description, username} = req.body;
+    const newPlan = await prisma.plan.create({
+        data: {
+            id,
+            title,
+            description,
+            username
+        }
+    })
+    res.status(201).json(newPlan)
+});
+
+// get all workouts for the current user
+app.post('/workouts', async (req, res) => {
+    const { user } = req.body;
+
+    const workouts = await prisma.workout.findMany({
+        where: {
+            username: user,
+        },
+    });
+    res.json(workouts)
+}); 
+
+// get all workouts for the current user
+app.post('/plans', async (req, res) => {
+    const { user } = req.body;
+
+    const plans = await prisma.plan.findMany({
+        where: {
+            username: user,
+        },
+    });
+    res.json(plans)
+}); 
+
+// gets a workout with the given unique ID
+app.get('/workout/:id', async (req, res) => {
+    const { id } = req.params
+    const workout = await prisma.workout.findUnique(
+        {
+            where: { id: parseInt(id) },
+        });
+        res.status(200).json(workout);
+});
+
+// gets a meal plan with the given unique ID
+app.get('/plan/:id', async (req, res) => {
+    const { id } = req.params
+    const plan = await prisma.plan.findUnique(
+        {
+            where: { id: parseInt(id) },
+        });
+        res.status(200).json(plan);
+});
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)

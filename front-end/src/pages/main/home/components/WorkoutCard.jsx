@@ -1,10 +1,27 @@
+/*
+
+WorkoutCard.jsx
+
+Displays a workout's title.
+
+Calls: 
+Called In: AllWorkouts
+
+*/
+
 import './WorkoutCard.css'
 
-function WorkoutCard(){
+function WorkoutCard(props){
+    function openModal(id) {
+        console.log("opening")
+        props.setModalID(id);
+        props.toggleModal(1);
+    }
+
     return (
         <>
-            <section className='home-card'>
-                <h3 className='wk-title'>Workout Name</h3>
+            <section className='home-card' onClick={() => openModal(props.id)}>
+                <h3 className='wk-title'>{props.title}</h3>
             </section>
         </>
     )

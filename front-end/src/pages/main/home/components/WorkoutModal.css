@@ -1,0 +1,27 @@
+#wk-modal-container{
+    height: 50%;
+    width: 50%;
+    position: absolute;
+    right: 25%;
+    top: 25%;
+    background-color: #ddcfff;
+    outline: 1px solid black;
+    z-index: 1;
+}
+
+#close-modal{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: xx-small;
+    width: fit-content;
+    height: fit-content;
+}
+
+#modal-title{
+    color: black;
+}
+
+#modal-desc{
+    color: black;
+}

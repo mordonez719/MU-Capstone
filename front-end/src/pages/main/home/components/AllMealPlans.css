@@ -3,4 +3,5 @@
     width: 95%;
     height: 25%;
     align-self: center;
+    display: flex;
 }
