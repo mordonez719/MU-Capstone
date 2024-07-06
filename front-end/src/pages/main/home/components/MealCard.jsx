@@ -13,7 +13,6 @@ import './MealCard.css'
 
 function MealCard(props){
     function openModal(id) {
-        console.log("opening")
         props.setModalID(id);
         props.toggleModal(1);
     }
