@@ -3,20 +3,27 @@
 const { PrismaClient } = require('@prisma/client');
 const express = require('express')
 const session = require('express-session')
-const morgan = require('morgan')
 const prisma = new PrismaClient()
 const app = express()
 const cors = require('cors')
 const PORT = process.env.PORT || 3000;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const uuid = require('uuid').v4
+const store = new session.MemoryStore();
+
+let currentUser = "";
 
 app.use(cors());
 
 app.use(express.json()); // Middleware for parsing JSON bodies from HTTP requests
 
-const sessions = {};
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 30000 },
+    store
+  }));
 
 // user authorization routing
 app.post("/create", async (req, res) => {
@@ -29,12 +36,8 @@ app.post("/create", async (req, res) => {
                 hashedPassword: hashed
             }
         });
-        const sessionId = uuid();
-            sessions[sessionId] = { user };
-            res.cookie('session-cookie', user, {
-                expires: new Date(Date.now() + 3600000),
-                httpOnly: false,
-        })
+        req.session.user = user
+        currentUser = req.session.user;
         res.status(200).json({});
     } catch (e) {
         res.status(500).json({"error": e.message});
@@ -49,13 +52,10 @@ app.post("/login", async (req, res) => {
     });
     bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
         if (result) {
-            const sessionId = uuid();
-            sessions[sessionId] = { user };
-            res.cookie('session-cookie', user, {
-                expires: new Date(Date.now() + 3600000),
-                httpOnly: false,
-            })
-            res.status(200).json({});
+            req.session.user = user
+            req.session.authenticated = true;
+            currentUser = req.session.user;
+            res.status(200).json();
         } else {
             res.status(500).json({"error": err});
         }
@@ -63,7 +63,9 @@ app.post("/login", async (req, res) => {
 })
 
 app.post("/logout", async (req, res) => {
-    res.clearCookie('session-cookie');
+    req.session.authenticated = false;
+    req.session.destroy();
+    currentUser = "";
 })
 
 
@@ -137,6 +139,11 @@ app.get('/plan/:id', async (req, res) => {
             where: { id: parseInt(id) },
         });
         res.status(200).json(plan);
+});
+
+// gets the current signed in user 
+app.get('/profile', async (req, res) => {
+    res.status(200).json(currentUser);
 });
 
 const server = app.listen(PORT, () => {

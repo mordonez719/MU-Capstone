@@ -30,6 +30,14 @@ function MainPage(props){
     // resets the user state variable, signing the user out
     const handleLogOut = () => {
         props.setUser("");
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/logout`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => response.json())
     }
 
 

@@ -10,7 +10,7 @@ Called In:
 
 */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/login/Login'
@@ -18,7 +18,22 @@ import MainPage from './pages/main/MainPage'
 
 function App() {
   const [user, setUser] = useState("")
-  const cookies = document.cookie;
+
+  const fetchProfile = async () => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+    const data = await response.json()
+    setUser(data);
+}
+
+useEffect(() => {
+  fetchProfile();
+})
 
   return (
     <BrowserRouter>

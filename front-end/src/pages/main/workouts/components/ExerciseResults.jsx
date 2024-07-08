@@ -1,7 +1,6 @@
 import './ExerciseResults.css'
 import ExerciseCard from './ExerciseCard'
 import { useEffect, useState } from 'react'
-import CreateWorkout from '../../home/components/CreateWorkout';
 
 function ExerciseResults(){
     const [apiData, fillData] = useState([]);
