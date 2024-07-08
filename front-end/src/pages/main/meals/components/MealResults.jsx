@@ -1,10 +1,20 @@
 import './MealResults.css'
 import MealCard from './MealCard'
 import { useEffect, useState } from 'react'
+// import ClipLoader from "react-spinners/ClipLoader"
 
 function MealResults(){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+
+    const [loading, setLoading] = useState(false);
+    const [color, setColor] = useState("#ddcfff");
+
+    const override = {
+        display: "block",
+        margin: "0 auto",
+        borderColor: "red",
+    }
 
     const fetchData = async (query) => {
         const baseURL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973`
@@ -18,10 +28,13 @@ function MealResults(){
             },  
         };
 
+        setLoading(true);
         const response = await fetch(baseURL, options);
         const data = await response.json();
 
         fillData(data.hits);
+        setLoading(false);
+
     }
 
     const handleSearchChange = (value) => {
@@ -53,7 +66,7 @@ function MealResults(){
                 placeholder="Search Meals..." />
             </section>
             </div>
-            {meals}
+            {loading ? (<><p>Loading...</p></>) : ( meals )}
         </section>
     )
 }

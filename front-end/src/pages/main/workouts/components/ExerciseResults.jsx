@@ -8,9 +8,6 @@ function ExerciseResults(){
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const [form, setForm] = useState(0);
-    const [added, setAdded] = useState([]);
-
     const fetchData = async (query) => {
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s"
         let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${searchQuery}`
@@ -21,12 +18,12 @@ function ExerciseResults(){
             "X-Api-Key": API_KEY,
             },
         };
-
+        setLoading(true);
         const response = await fetch(apiURL, options);
         const data = await response.json();
 
         fillData(data);
-
+        setLoading(false);
     }
 
     const handleSearchChange = (value) => {
@@ -42,7 +39,7 @@ function ExerciseResults(){
     for (let i = 0; i < apiData.length; i++){
         let exercise = apiData[i];
         if (exercise){
-            exercises.push(<ExerciseCard form={form} id={i} name={exercise.name} exercise={exercise}>
+            exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise}>
                 </ExerciseCard>);
         };
     };
@@ -58,10 +55,7 @@ function ExerciseResults(){
                     placeholder="Search Excerices..." />
                 </section>
             </div>
-            <ExerciseCard form={form} added={added} name="tester" />
-            <ExerciseCard form={form} added={added} name="tester 2" />
-            <ExerciseCard form={form} added={added} name="tester 3" />
-            {exercises}
+            {loading ? (<p>Loading...</p>) : ( exercises )}
         </section>
     )
 }
