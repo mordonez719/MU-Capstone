@@ -12,6 +12,7 @@ Called In: AllMealPlans
 import './MealCard.css'
 
 function MealCard(props){
+    // changes pop-up state on card click, takes id to populate pop-up
     function openModal(id) {
         props.setModalID(id);
         props.toggleModal(1);

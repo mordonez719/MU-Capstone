@@ -17,7 +17,7 @@ app.use(cors());
 
 app.use(express.json()); // Middleware for parsing JSON bodies from HTTP requests
 
-app.use(session({
+app.use(session({ // middleware for setting up sessions
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
@@ -25,19 +25,19 @@ app.use(session({
     store
   }));
 
-// user authorization routing
+// creates a new account
 app.post("/create", async (req, res) => {
-    const {user, password} = req.body;
-    bcrypt.hash(password, saltRounds, async function(err, hashed) {
+    const {user, password} = req.body; // takes username and password
+    bcrypt.hash(password, saltRounds, async function(err, hashed) { // hashes password
         try {
-        await prisma.user.create({
+        await prisma.user.create({ // creates a new user by storing username and hashed password
             data: {
                 user,
                 hashedPassword: hashed
             }
         });
         req.session.user = user
-        currentUser = req.session.user;
+        currentUser = req.session.user; // sets current user
         res.status(200).json({});
     } catch (e) {
         res.status(500).json({"error": e.message});
@@ -45,16 +45,17 @@ app.post("/create", async (req, res) => {
     })
 })
 
+// login to existing account
 app.post("/login", async (req, res) => {
-    const {user, password} = req.body;
-    const userRecord = await prisma.user.findUnique({
+    const {user, password} = req.body; // takes username and password
+    const userRecord = await prisma.user.findUnique({ // finds account matching given username
         where: {user}
     });
-    bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
+    bcrypt.compare(password, userRecord.hashedPassword, function(err, result) { // compares to hashed password
         if (result) {
             req.session.user = user
             req.session.authenticated = true;
-            currentUser = req.session.user;
+            currentUser = req.session.user; // sets current user if successful
             res.status(200).json();
         } else {
             res.status(500).json({"error": err});
@@ -62,6 +63,7 @@ app.post("/login", async (req, res) => {
     })
 })
 
+// logs current user out
 app.post("/logout", async (req, res) => {
     req.session.authenticated = false;
     req.session.destroy();

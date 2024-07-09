@@ -14,14 +14,17 @@ Called In: HomePage
 import './CreatePlan.css'
 
 function CreatePlan(props){
+    // creates a meal plan when the user submits the form
     const handleSubmit = (event) => {
         event.preventDefault();
         props.setForm(0);
 
         const form = event.target;
+
+        // organizes user input
         const formData = new FormData(form);
 
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/plan`, // adds a board with the entered form input to the database
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/plan`, // adds a plan with the entered form input to the database
               {
                 method: "POST",
                 headers: {

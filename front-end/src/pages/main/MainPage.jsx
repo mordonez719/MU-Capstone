@@ -27,7 +27,7 @@ function MainPage(props){
           setTab(page);
       }
 
-    // resets the user state variable, signing the user out
+    // calls logout path to destory session and reset the current user, signing the user out
     const handleLogOut = () => {
         props.setUser("");
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/logout`,
@@ -50,7 +50,7 @@ function MainPage(props){
                 <p id="logout-button" onClick={handleLogOut}> Logout </p>
             </span>
         </header>
-        <main id="all-content">
+        <main id="all-content"> {/* alters display--visible or not--depending on if the page is active */}
             <div className={tabState === 0 ? "content active-content" : "content"}>
                 <HomePage user={props.user}/>
             </div>
@@ -61,7 +61,7 @@ function MainPage(props){
                 <MealsPage />
             </div>
         </main>
-        <footer>
+        <footer> {/* alters display and toggles tab depening on if the tab is active */}
             <h4 className={tabState === 1 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(1)}>Workouts</h4>
             <h4 className={tabState === 0 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(0)}>Home</h4>
             <h4 className={tabState === 2 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(2)}>Meal Plans</h4>

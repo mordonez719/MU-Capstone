@@ -1,3 +1,14 @@
+/*
+
+WorkoutsPage.jsx
+
+Page for users to search through exercise data from the API.
+
+Calls: ExerciseResults
+Called In: MainPage
+
+*/
+
 import './WorkoutsPage.css'
 import ExerciseResults from "./components/ExerciseResults"
 

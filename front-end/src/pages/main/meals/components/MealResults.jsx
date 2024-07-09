@@ -1,21 +1,28 @@
+/*
+
+MealResults.jsx
+
+Fetches and displays up to 10 meals from the API that 
+match the user's query. Implements a loading state while data
+is being fetched.
+
+Calls: MealCard
+Called In: MainPage
+
+*/
+
 import './MealResults.css'
 import MealCard from './MealCard'
 import { useEffect, useState } from 'react'
-// import ClipLoader from "react-spinners/ClipLoader"
 
 function MealResults(){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
+    // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
-    const [color, setColor] = useState("#ddcfff");
 
-    const override = {
-        display: "block",
-        margin: "0 auto",
-        borderColor: "red",
-    }
-
+    // gets API data, takes a query
     const fetchData = async (query) => {
         const baseURL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973`
 
@@ -47,6 +54,7 @@ function MealResults(){
 
     let meals = []
 
+    // creates a meal card for the first 10 meals recieved
     for (let i = 0; i < apiData.length && i < 11; i++){
         let meal = apiData[i];
         if (meal){

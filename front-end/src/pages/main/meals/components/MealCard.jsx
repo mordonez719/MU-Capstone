@@ -1,3 +1,14 @@
+/*
+
+MealCard.jsx
+
+Displays image, name, and calories of a meal fetched by the API.
+
+Calls:
+Called In: MealResults
+
+*/
+
 import './MealCard.css'
 
 function MealCard(props){

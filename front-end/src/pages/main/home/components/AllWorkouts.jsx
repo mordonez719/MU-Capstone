@@ -26,6 +26,7 @@ function AllWorkouts(props){
         fetchWorkouts();
     })
 
+    // fetches all workouts associated with the current user
     const fetchWorkouts = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workouts`,
         {

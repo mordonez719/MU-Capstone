@@ -1,3 +1,14 @@
+/*
+
+MealsPage.jsx
+
+Page for users to search through meal data from the API.
+
+Calls: MealResults
+Called In: MainPage
+
+*/
+
 import "./MealsPage.css"
 import MealResults from "./components/MealResults"
 

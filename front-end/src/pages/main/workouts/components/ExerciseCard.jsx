@@ -1,3 +1,14 @@
+/*
+
+ExerciseCard.jsx
+
+Displays the name of an exercise fetched by the API.
+
+Calls:
+Called In: ExerciseResults
+
+*/
+
 import './ExerciseCard.css'
 
 function ExerciseCard(props){

@@ -1,15 +1,32 @@
+/*
+
+ExerciseResults.jsx
+
+Fetches and displays up exercises from the API that 
+match the user's query. Users can search for exercise by a name
+or a part of a name. Implements a loading state while data
+is being fetched.
+
+Calls: ExerciseCard
+Called In: MainPage
+
+*/
+
 import './ExerciseResults.css'
 import ExerciseCard from './ExerciseCard'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 function ExerciseResults(){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+
+    // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
 
+    // takes a user search query and fetches matching exercises
     const fetchData = async (query) => {
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s"
-        let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${searchQuery}`
+        let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${query}`
 
         const options = {
             method: "GET",
@@ -34,7 +51,8 @@ function ExerciseResults(){
     }
 
     let exercises = []
-
+    
+    // creates an exercise card for each exercise fetched
     for (let i = 0; i < apiData.length; i++){
         let exercise = apiData[i];
         if (exercise){
@@ -42,7 +60,6 @@ function ExerciseResults(){
                 </ExerciseCard>);
         };
     };
-
 
     return (
         <section id="api-exercises">

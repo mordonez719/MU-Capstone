@@ -17,6 +17,7 @@ function PlanModal(props){
     const id = props.id;
     const [plan, setPlan] = useState([]);
 
+    // gets information on specific meal plan with the given id
     const fetchPlan = () => { 
     fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/plan/${id}`)
     .then(response => {
@@ -33,6 +34,7 @@ function PlanModal(props){
     });
     };
 
+    // fetches a plan if the modal is open and an id is given
     if (props.modal && id){
         fetchPlan();
     }

@@ -19,6 +19,7 @@ import MainPage from './pages/main/MainPage'
 function App() {
   const [user, setUser] = useState("")
 
+  // gets current user, sets user useState to either "" or a username
   const fetchProfile = async () => {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile`,
         {
@@ -40,6 +41,7 @@ useEffect(() => {
     <div id="main-content-holder">
       <main>
         <Routes>
+          {/* displays login or main page depending on user */}
           <Route path="/" element={user ? <MainPage user={user} setUser={setUser}/> : <Login setUser={setUser}/>} />
         </Routes>
       </main>

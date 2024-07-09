@@ -15,11 +15,14 @@ import './CreateWorkout.css'
 
 function CreateWorkout(props){
 
+    // creates a workout when the user submits the form
     const handleSubmit = (event) => {
         event.preventDefault();
         props.setForm(0);
 
         const form = event.target;
+        
+        // organizes user input
         const formData = new FormData(form);
 
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // adds a board with the entered form input to the database

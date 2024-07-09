@@ -27,7 +27,7 @@ function Login(props) {
         setPassword(e.target.value)
     }
 
-    // encrypts password and add the username, password pair to the database
+    // encrypts password and adds the username, password pair to the database
     const handleSignUp = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
         {
@@ -43,7 +43,7 @@ function Login(props) {
         .then(response => {
             if (response.ok) {
                 setResult("sign up success!");
-                props.setUser(user);
+                props.setUser(user); // sets user on account creation
             }
             else{
                 setResult("failed to create an account")
@@ -70,7 +70,7 @@ function Login(props) {
         .then(response => {
             if (response.ok) {
                 setResult("log in success!");
-                props.setUser(user);
+                props.setUser(user); // sets user on login
             }
             else{
                 setResult("failed to find matching account")

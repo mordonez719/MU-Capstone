@@ -16,7 +16,8 @@ import './WorkoutModal.css'
 function WorkoutModal(props){
     const id = props.id;
     const [workout, setWorkout] = useState([]);
-
+   
+    // gets information on specific workout with the given id
     const fetchWorkout = () => { 
     fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/${id}`)
     .then(response => {
@@ -33,6 +34,7 @@ function WorkoutModal(props){
     });
     };
 
+    // fetches a plan if the modal is open and an id is given
     if (props.modal && id){
         fetchWorkout();
     }

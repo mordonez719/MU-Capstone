@@ -26,6 +26,7 @@ function AllMealPlans(props){
         fetchPlans();
     })
 
+    // fetches all meal plans associated with the current user
     const fetchPlans = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/plans`,
         {
