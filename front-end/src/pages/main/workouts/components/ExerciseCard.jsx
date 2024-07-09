@@ -2,7 +2,8 @@
 
 ExerciseCard.jsx
 
-Displays the name of an exercise fetched by the API.
+Displays the name of an exercise fetched by the API and the dropdown menu to add the exercise
+to a workout.
 
 Calls: WorkoutDropdown
 Called In: ExerciseResults

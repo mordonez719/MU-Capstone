@@ -8,7 +8,7 @@ or a part of a name. Implements a loading state while data
 is being fetched.
 
 Calls: ExerciseCard
-Called In: MainPage
+Called In: WorkoutsPage
 
 */
 

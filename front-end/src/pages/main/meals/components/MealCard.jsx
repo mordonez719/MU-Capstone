@@ -2,14 +2,16 @@
 
 MealCard.jsx
 
-Displays image, name, and calories of a meal fetched by the API.
+Displays image, name, and calories of a meal fetched by the API as well as a dropdown
+menu to add the meal to a meal plan.
 
-Calls:
+Calls: PlanDropdown
 Called In: MealResults
 
 */
 
 import './MealCard.css'
+import PlanDropdown from './PlanDropdown'
 
 function MealCard(props){
     return (
@@ -19,8 +21,9 @@ function MealCard(props){
             </span>
                 <span>
                     <h2>{props.name}</h2>
-                    <h6>{props.calories}</h6>
+                    <h6>Calories: {props.calories}</h6>
                 </span>
+            <PlanDropdown user={props.user}/>
         </section>
     )
 }

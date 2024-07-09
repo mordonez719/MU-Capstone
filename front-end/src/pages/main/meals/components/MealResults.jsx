@@ -7,7 +7,7 @@ match the user's query. Implements a loading state while data
 is being fetched.
 
 Calls: MealCard
-Called In: MainPage
+Called In: MealsPage
 
 */
 
@@ -15,7 +15,7 @@ import './MealResults.css'
 import MealCard from './MealCard'
 import { useEffect, useState } from 'react'
 
-function MealResults(){
+function MealResults(props){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -58,7 +58,7 @@ function MealResults(){
     for (let i = 0; i < apiData.length && i < 11; i++){
         let meal = apiData[i];
         if (meal){
-            meals.push(<MealCard id={i} name={meal.recipe.label} calories={meal.recipe.calories} img={meal.recipe.image}>
+            meals.push(<MealCard id={i} name={meal.recipe.label} calories={meal.recipe.calories} img={meal.recipe.image} user={props.user}>
                 </MealCard>);
         };
     };
