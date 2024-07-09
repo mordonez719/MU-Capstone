@@ -1,0 +1,11 @@
+.wk-button{
+    outline: 1px solid black;
+    border-radius: 0%;
+    background-color: rgb(233, 233, 233);
+    width: 100%;
+    transition: background-color 0.25s;
+}
+
+.wk-button:hover{
+    background-color: #eadff5;
+}

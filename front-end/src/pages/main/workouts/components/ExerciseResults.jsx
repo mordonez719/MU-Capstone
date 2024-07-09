@@ -16,7 +16,7 @@ import './ExerciseResults.css'
 import ExerciseCard from './ExerciseCard'
 import { useState } from 'react'
 
-function ExerciseResults(){
+function ExerciseResults(props){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -56,8 +56,7 @@ function ExerciseResults(){
     for (let i = 0; i < apiData.length; i++){
         let exercise = apiData[i];
         if (exercise){
-            exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise}>
-                </ExerciseCard>);
+            exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise} user={props.user} />);
         };
     };
 

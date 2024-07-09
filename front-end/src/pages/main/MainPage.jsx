@@ -55,10 +55,10 @@ function MainPage(props){
                 <HomePage user={props.user}/>
             </div>
             <div className={tabState === 1 ? "content active-content" : "content"}>
-                <WorkoutsPage />
+                <WorkoutsPage user={props.user}/>
             </div>
             <div className={tabState === 2 ? "content active-content" : "content"}>
-                <MealsPage />
+                <MealsPage user={props.user}/>
             </div>
         </main>
         <footer> {/* alters display and toggles tab depening on if the tab is active */}

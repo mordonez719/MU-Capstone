@@ -12,11 +12,11 @@ Called In: MainPage
 import './WorkoutsPage.css'
 import ExerciseResults from "./components/ExerciseResults"
 
-function WorkoutsPage(){
+function WorkoutsPage(props){
     return (
         <div id="wk-container">
         <h2>Create Workouts Here</h2>
-        <ExerciseResults />
+        <ExerciseResults user={props.user}/>
         </div>
     )
 }
