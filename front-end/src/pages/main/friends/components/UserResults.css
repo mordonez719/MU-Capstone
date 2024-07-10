@@ -1,0 +1,13 @@
+#searcher{
+    display: flex;
+}
+
+#user-result{
+    width: 50%;
+    height: 10%;
+    outline: 1px solid pink;
+    margin: 15px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}

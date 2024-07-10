@@ -8,7 +8,7 @@ The main content displayed switches between the home,
 meals, and exercise pages depending on the active tab selected 
 by the user.
 
-Calls: HomePage, WorkoutsPage, MealsPage
+Calls: HomePage, WorkoutsPage, MealsPage, FriendsPage
 Called In: App
 
 */
@@ -18,6 +18,7 @@ import HomePage from './home/HomePage';
 import { useState } from 'react';
 import WorkoutsPage from './workouts/WorkoutsPage';
 import MealsPage from './meals/MealsPage';
+import FriendsPage from './friends/FriendsPage.jsx'
 
 function MainPage(props){
     const [tabState, setTab] = useState(0);
@@ -60,11 +61,15 @@ function MainPage(props){
             <div className={tabState === 2 ? "content active-content" : "content"}>
                 <MealsPage user={props.user}/>
             </div>
+            <div className={tabState === 3 ? "content active-content" : "content"}>
+                <FriendsPage user={props.user}/>
+            </div>
         </main>
         <footer> {/* alters display and toggles tab depening on if the tab is active */}
-            <h4 className={tabState === 1 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(1)}>Workouts</h4>
             <h4 className={tabState === 0 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(0)}>Home</h4>
+            <h4 className={tabState === 1 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(1)}>Workouts</h4>
             <h4 className={tabState === 2 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(2)}>Meal Plans</h4>
+            <h4 className={tabState === 3 ? "tabs active-tabs" : "tabs"} onClick={()=> toggleTab(3)}>Friends</h4>
         </footer>
         </div>
     )

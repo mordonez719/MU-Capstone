@@ -196,6 +196,15 @@ app.get('/profile', async (req, res) => {
     res.status(200).json(currentUser);
 });
 
+// searches for users whose names match the current user's search
+app.get('/users/query/:query', async (req, res) => {
+    const { query } = req.params
+    const foundUser = await prisma.user.findUnique({
+        where: { user: query}
+    });
+    res.status(200).json(foundUser);
+});
+
 const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 });
