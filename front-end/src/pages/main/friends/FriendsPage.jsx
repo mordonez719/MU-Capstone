@@ -21,6 +21,17 @@ function FriendsPage(props){
         <div id="user-search-container">
             <UserResults />
         </div>
+        <section id="requests">
+            <div className="request-container">
+                Sent Requests
+            </div>
+            <div className="request-container">
+                Recieved Requests
+            </div>
+        </section>
+        <section id="friends-container">
+            Friends
+        </section>
         </>
     )
 }

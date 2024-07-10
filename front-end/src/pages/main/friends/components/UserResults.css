@@ -5,7 +5,7 @@
 #user-result{
     width: 50%;
     height: 10%;
-    outline: 1px solid pink;
+    outline: 1px solid rgb(187, 163, 252);
     margin: 15px;
     padding: 10px;
     display: flex;
