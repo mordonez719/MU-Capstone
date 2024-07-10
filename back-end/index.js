@@ -167,6 +167,30 @@ app.get('/plan/:id', async (req, res) => {
         res.status(200).json(plan);
 });
 
+// add a meal to a plan's meal list
+app.post('/plan/meal', async (req, res) => {
+    const { name, planID } = req.body;
+    const newMeal = await prisma.meal.create({
+        data: {
+            name,
+            planID
+        }
+    })
+    res.status(201).json(newMeal)
+});
+
+// fetches meals for the plan with the given id
+app.get('/plan/:id/meals', async (req, res) => {
+    const { id } = req.params
+
+    const plan_meals = await prisma.meal.findMany({
+        where: {
+            planID: parseInt(id),
+        },
+    });
+    res.json(plan_meals)
+}); 
+
 // gets the current signed in user 
 app.get('/profile', async (req, res) => {
     res.status(200).json(currentUser);

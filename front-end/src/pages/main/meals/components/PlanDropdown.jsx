@@ -41,7 +41,7 @@ function PlanDropdown(props){
     // creates a plan button for each fetched plan
     const plans_buttons = plans.map((plan) => {
     return (
-      <PlanButton key={plan.id} id={plan.id} name={plan.title}/>
+      <PlanButton key={plan.id} id={plan.id} name={plan.title} mealName={props.mealName}/>
     )
     })
 

@@ -13,9 +13,25 @@ Called In: PlanDropdown
 import './PlanButton.css'
 
 function PlanButton(props){
+
+    // adds meal associated with the clicked button to the selected plan
+    function handleAdd(){
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/plan/meal`,
+              {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: props.mealName,
+                    planID: parseInt(props.id)
+                }),
+                }
+            )
+    }
     return (
         <>
-        <button className='plan-button'>{props.name}</button>
+        <button id={props.id} className='plan-button' onClick={handleAdd}>{props.name}</button>
         </>
     )
 }

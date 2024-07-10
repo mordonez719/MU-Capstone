@@ -20,8 +20,27 @@
 
 #modal-title{
     color: black;
+    margin-left: 0px;
 }
 
 #modal-desc{
     color: black;
+}
+
+.meal-header{
+    color: black;
+    width: fit-content;
+    align-self: baseline;
+    margin-left: 10%;
+}
+
+.meal-container{
+    width: 80%;
+    margin-left: 10%;
+    outline: 2px solid rgb(187, 163, 252);
+    height: 50%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

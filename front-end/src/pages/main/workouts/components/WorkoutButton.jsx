@@ -14,10 +14,11 @@ import './WorkoutButton.css'
 
 function WorkoutButton(props){
 
+    // adds exercise associated with the clicked button to the selected workout
     function handleAdd(){
         console.log("adding")
         console.log(parseInt(props.id))
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/exercise`, // posts new card to the database
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/exercise`,
               {
                 method: "POST",
                 headers: {

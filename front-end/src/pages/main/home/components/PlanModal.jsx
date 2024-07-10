@@ -5,17 +5,19 @@ PlanModal.jsx
 Fetches a specific meal plan by the given ID.
 Displays the meal plan's title and description.
 
-Calls: 
+Calls: MealDisplay
 Called In: AllMealPlans
 
 */
 
 import { useState, useEffect } from "react";
 import './PlanModal.css'
+import MealDisplay from './MealDisplay'
 
 function PlanModal(props){
     const id = props.id;
     const [plan, setPlan] = useState([]);
+    const [meals, setMeals] = useState([]);
 
     // gets information on specific meal plan with the given id
     const fetchPlan = () => { 
@@ -34,10 +36,40 @@ function PlanModal(props){
     });
     };
 
-    // fetches a plan if the modal is open and an id is given
-    if (props.modal && id){
+    // gets the meals associated with the plan with the given id
+    const fetchMeals = () => { 
+      fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/plan/${id}/meals`)
+      .then(response => {
+        if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+      })
+      .then(data => {
+        setMeals(data);
+      })
+      .catch(error => {
+        console.error('Error fetching workout:', error);
+      });
+      };
+
+    // fetches a plan and its meals if the modal is open and an id is given
+    useEffect(() => {
+      if (props.modal && id){
         fetchPlan();
+        fetchMeals();
     }
+    }, [props.modal, id]);
+
+    let plan_meals = []
+    
+    // creates a meal display card for each meal fetched
+    for (let i = 0; i < meals.length; i++){
+        let meal = meals[i];
+        if (meal){
+            plan_meals.push(<MealDisplay id={i} name={meal.name}/>);
+        };
+    };
 
     return (props.modal) ? (
         <>
@@ -45,6 +77,10 @@ function PlanModal(props){
                 <h3 id="modal-title">{plan.title}</h3>
                 <p id="modal-desc">{plan.description}</p>
                 <button id="close-form" onClick={() => props.toggleModal(0)}>X</button>
+                <h4 className="meal-header">Meals:</h4>
+                <section className="meal-container">
+                  {plan_meals}
+                </section>
             </section>
         </>
         ) : ""

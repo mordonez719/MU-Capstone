@@ -23,7 +23,7 @@ function MealCard(props){
                     <h2>{props.name}</h2>
                     <h6>Calories: {props.calories}</h6>
                 </span>
-            <PlanDropdown user={props.user}/>
+            <PlanDropdown user={props.user} mealName={props.name}/>
         </section>
     )
 }
