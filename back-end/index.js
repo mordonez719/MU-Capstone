@@ -99,7 +99,7 @@ app.post('/user/plan', async (req, res) => {
     res.status(201).json(newPlan)
 });
 
-// get all workouts for the current user
+// get all workouts for the specified user
 app.post('/workouts', async (req, res) => {
     const { user } = req.body;
 
@@ -111,7 +111,7 @@ app.post('/workouts', async (req, res) => {
     res.json(workouts)
 }); 
 
-// get all workouts for the current user
+// get all workouts for the specified user
 app.post('/plans', async (req, res) => {
     const { user } = req.body;
 
@@ -203,6 +203,38 @@ app.get('/users/query/:query', async (req, res) => {
         where: { user: query}
     });
     res.status(200).json(foundUser);
+});
+
+// sends a request from the current user to the given user and updates request fields
+app.put('/friends/send', async (req, res) => {
+    const { targetName } = req.body;
+    const newFriend = await prisma.user.findUnique({
+        where: { user: targetName}
+    });
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            sent: {connect: newFriend}
+        }
+    })
+    res.status(200).json(updatedCurrent);
+});
+
+// accepts a recieved friend request and updates request and friend fields
+app.put('/friends/accept', async (req, res) => {
+    const { targetName } = req.body;
+    const newFriend = await prisma.user.findUnique({
+        where: { user: targetName}
+    });
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            friends: {connect: newFriend},
+            friendOf: {connect: newFriend},
+            recieved: {disconnect: newFriend}
+        }
+    })
+    res.status(200).json(updatedCurrent);
 });
 
 const server = app.listen(PORT, () => {
