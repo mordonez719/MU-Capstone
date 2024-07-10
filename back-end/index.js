@@ -133,6 +133,30 @@ app.get('/workout/:id', async (req, res) => {
         res.status(200).json(workout);
 });
 
+// add an exercise to a workout's exercise list
+app.post('/workout/exercise', async (req, res) => {
+    const { name, workoutID } = req.body;
+    const newExercise = await prisma.exercise.create({
+        data: {
+            name,
+            workoutID
+        }
+    })
+    res.status(201).json(newExercise)
+});
+
+// fetches exercises for the workout with the given id
+app.get('/workout/:id/exercises', async (req, res) => {
+    const { id } = req.params
+
+    const workout_exercises = await prisma.exercise.findMany({
+        where: {
+            workoutID: parseInt(id),
+        },
+    });
+    res.json(workout_exercises)
+}); 
+
 // gets a meal plan with the given unique ID
 app.get('/plan/:id', async (req, res) => {
     const { id } = req.params

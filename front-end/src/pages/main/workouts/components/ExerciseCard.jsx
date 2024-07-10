@@ -18,7 +18,7 @@ function ExerciseCard(props){
     return (
         <section className="exercise-card-back">
             <h2 className='ex-name'>{props.name}</h2>
-            <WorkoutDropdown user={props.user}/>
+            <WorkoutDropdown user={props.user} exName={props.name}/>
         </section>
     )
 }

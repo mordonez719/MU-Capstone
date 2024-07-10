@@ -41,7 +41,7 @@ function WorkoutDropdown(props){
     // creates a workout button for each fetched workout
     const workout_buttons = workouts.map((workout) => {
     return (
-      <WorkoutButton key={workout.id} id={workout.id} name={workout.title}/>
+      <WorkoutButton key={workout.id} id={workout.id} name={workout.title} exName={props.exName}/>
     )
     })
 
