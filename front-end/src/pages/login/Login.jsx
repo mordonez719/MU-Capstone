@@ -91,7 +91,7 @@ function Login(props) {
                 <input onChange={handleChangeUser} value={user} placeholder='Username...'></input>
             </div>
             <div>
-                <input onChange={handleChangePassword} value={password} placeholder='Password...'></input>
+                <input type="password" onChange={handleChangePassword} value={password} placeholder='Password...'></input>
             </div>
             <span>
                 <button className="login-button" onClick={handleLogIn}>Log In</button>
