@@ -111,7 +111,19 @@ app.post('/workouts', async (req, res) => {
     res.json(workouts)
 }); 
 
-// get all workouts for the specified user
+// get all workouts for the users
+app.post('/friends/workouts', async (req, res) => {
+    const { users } = req.body;
+
+    const workouts = await prisma.workout.findMany({
+        where: {
+            username: { in: users},
+        },
+    });
+    res.json(workouts)
+});
+
+// get all plans for the specified user
 app.post('/plans', async (req, res) => {
     const { user } = req.body;
 
@@ -122,6 +134,18 @@ app.post('/plans', async (req, res) => {
     });
     res.json(plans)
 }); 
+
+// get all workouts for the users
+app.post('/friends/plans', async (req, res) => {
+    const { users } = req.body;
+
+    const plans = await prisma.plan.findMany({
+        where: {
+            user: { in: users},
+        },
+    });
+    res.json(plans)
+});
 
 // gets a workout with the given unique ID
 app.get('/workout/:id', async (req, res) => {

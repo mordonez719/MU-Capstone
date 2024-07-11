@@ -1,0 +1,7 @@
+#friends-plans {
+    outline: 2px dashed #ddcfff;
+    width: 95%;
+    height: 50px;;
+    align-self: center;
+    display: flex;
+}

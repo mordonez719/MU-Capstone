@@ -22,6 +22,7 @@ function WorkoutCard(props){
         <>
             <section className='home-card' onClick={() => openModal(props.id)}>
                 <h3 className='wk-title'>{props.title}</h3>
+                <h5 className='wk-creator'>{props.creator}</h5>
             </section>
         </>
     )
