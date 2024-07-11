@@ -220,7 +220,22 @@ app.put('/friends/send', async (req, res) => {
     res.status(200).json(updatedCurrent);
 });
 
-// accepts a recieved friend request and updates request and friend fields
+// cancels a sent request and updates request fields
+app.put('/friends/cancel', async (req, res) => {
+    const { targetName } = req.body;
+    const canceled = await prisma.user.findUnique({
+        where: { user: targetName}
+    });
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            sent: {disconnect: canceled}
+        }
+    })
+    res.status(200).json(updatedCurrent);
+});
+
+// accepts a received friend request and updates request and friend fields
 app.put('/friends/accept', async (req, res) => {
     const { targetName } = req.body;
     const newFriend = await prisma.user.findUnique({
@@ -231,10 +246,54 @@ app.put('/friends/accept', async (req, res) => {
         data: {
             friends: {connect: newFriend},
             friendOf: {connect: newFriend},
-            recieved: {disconnect: newFriend}
+            received: {disconnect: newFriend}
         }
     })
     res.status(200).json(updatedCurrent);
+});
+
+// denies a received friend request and updates request fields
+app.put('/friends/deny', async (req, res) => {
+    const { targetName } = req.body;
+    const denied = await prisma.user.findUnique({
+        where: { user: targetName}
+    });
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            received: {disconnect: denied}
+        }
+    })
+    res.status(200).json(updatedCurrent);
+});
+
+// removes a friend and updates friend fields
+app.put('/friends/remove', async (req, res) => {
+    const { targetName } = req.body;
+    const removed = await prisma.user.findUnique({
+        where: { user: targetName}
+    });
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            friends: {disconnect: removed},
+            friendOf: {disconnect: removed},
+        }
+    })
+    res.status(200).json(updatedCurrent);
+});
+
+// retrieves all request and friend lists for the current user
+app.get('/friendlist', async (req, res) => {
+    const user = await prisma.user.findUnique({
+        where: { user: currentUser},
+        include: {
+            sent: true,
+            received: true,
+            friends: true,
+        },
+    });
+    res.status(200).json(user);
 });
 
 const server = app.listen(PORT, () => {

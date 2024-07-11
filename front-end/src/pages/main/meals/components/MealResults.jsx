@@ -54,7 +54,7 @@ function MealResults(props){
 
     let meals = []
 
-    // creates a meal card for the first 10 meals recieved
+    // creates a meal card for the first 10 meals received
     for (let i = 0; i < apiData.length && i < 11; i++){
         let meal = apiData[i];
         if (meal){
