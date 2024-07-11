@@ -56,7 +56,7 @@ function FriendsPlans(props){
             <section id="friends-plans">
                 {plan_cards}
             </section>
-            <PlanModal modal={modal} toggleModal={toggleModal} id={modalID} add={true}/>
+            <PlanModal user={props.user} modal={modal} toggleModal={toggleModal} id={modalID} add={true}/>
         </>
     )
 }

@@ -71,8 +71,9 @@ function WorkoutModal(props){
         };
     };
 
+    // adds a copy of the friend's workout to the current user's library
     function handleCopy(){
-      fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // adds a copy of the friend's workout to the current user's account
+      fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // creates an empty copy of the workout
         {
           method: "POST",
           headers: 
@@ -87,11 +88,11 @@ function WorkoutModal(props){
         }
       ).then(response => response.json())
       .then(data => {
-        const newWorkoutID = data.id;
-        for (let i = 0; i < exercises.length; i++){
+        const newWorkoutID = data.id; // gets the ID of the newly created copy to add exercises to
+        for (let i = 0; i < exercises.length; i++){ // for each exercise
           let exercise = exercises[i];
           if (exercise){
-            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/exercise`,
+            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/exercise`, // add a new exercise model to the new copy
                 {
                   method: "POST",
                   headers: {
