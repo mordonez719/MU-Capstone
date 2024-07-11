@@ -24,7 +24,7 @@ function CreatePlan(props){
         // organizes user input
         const formData = new FormData(form);
 
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/plan`, // adds a plan with the entered form input to the database
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/plan`, // adds a meal plan with the entered form input to the database
               {
                 method: "POST",
                 headers: {

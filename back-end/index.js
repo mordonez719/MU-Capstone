@@ -141,7 +141,7 @@ app.post('/friends/plans', async (req, res) => {
 
     const plans = await prisma.plan.findMany({
         where: {
-            user: { in: users},
+            username: { in: users},
         },
     });
     res.json(plans)
@@ -155,6 +155,22 @@ app.get('/workout/:id', async (req, res) => {
             where: { id: parseInt(id) },
         });
         res.status(200).json(workout);
+});
+
+// retrieves a specific workout with data for copying
+app.get('/friend/workout/:id', async (req, res) => {
+    const { id } = req.params
+
+    const workout = await prisma.workout.findUnique(
+        {
+            where: { id: parseInt(id) },
+            include: {
+                id: false,
+                username: false,
+                // exercises: true,
+            },
+        });
+    res.status(200).json(workout);
 });
 
 // add an exercise to a workout's exercise list
@@ -319,6 +335,7 @@ app.get('/friendlist', async (req, res) => {
     });
     res.status(200).json(user);
 });
+
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)

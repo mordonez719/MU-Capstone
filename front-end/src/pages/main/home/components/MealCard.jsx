@@ -22,6 +22,7 @@ function MealCard(props){
         <>
             <section className='home-card' onClick={() => openModal(props.id)}>
                 <h3 className='plan-title'>{props.title}</h3>
+                <h3 className='plan-creator'>{props.creator}</h3>
             </section>
         </>
     )

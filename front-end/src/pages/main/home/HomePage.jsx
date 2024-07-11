@@ -6,7 +6,7 @@ Sets up the display of workouts and meal plans libraries.
 Create workout button opens a form for the user to enter a
 name and description for an empty workout to be displayed.
 
-Calls: AllMealPlans, AllWorkouts, CreatePlan, CreateWorkout
+Calls: AllMealPlans, AllWorkouts, CreatePlan, CreateWorkout, FriendsWorkouts, FriendsPlans
 Called In: MainPage
 
 */
@@ -45,7 +45,6 @@ function HomePage(props) {
                 )
                 })
         )
-        // console.log(friendsNames)
     };
 
     useEffect(() => {

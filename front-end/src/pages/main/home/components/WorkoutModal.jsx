@@ -6,7 +6,7 @@ Fetches a specific workout plan by the given ID.
 Displays the workout's title and description.
 
 Calls: 
-Called In: AllWorkouts
+Called In: AllWorkouts, FriendsWorkouts
 
 */
 
@@ -71,11 +71,49 @@ function WorkoutModal(props){
         };
     };
 
+    function handleCopy(){
+      fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // adds a copy of the friend's workout to the current user's account
+        {
+          method: "POST",
+          headers: 
+            {
+              "Content-Type": "application/json",
+            },
+          body: JSON.stringify({
+            title: workout.title,
+            description: workout.description,
+            username: props.user
+          }),
+        }
+      ).then(response => response.json())
+      .then(data => {
+        const newWorkoutID = data.id;
+        for (let i = 0; i < exercises.length; i++){
+          let exercise = exercises[i];
+          if (exercise){
+            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/workout/exercise`,
+                {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      name: exercise.name,
+                      workoutID: newWorkoutID
+                  }),
+                  }
+              )
+          };
+      };
+      })
+    }
+
     return (props.modal) ? (
         <>
             <section id="wk-modal-container">
                 <h3 id="modal-title">{workout.title}</h3>
                 <p id="modal-desc">{workout.description}</p>
+                {props.add ? <button onClick={handleCopy}>Create a Copy</button> : ""}
                 <button id="close-form" onClick={() => props.toggleModal(0)}>X</button>
                 <h4 className="ex-header">Exercises:</h4>
                 <section className="ex-container">

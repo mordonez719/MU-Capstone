@@ -25,7 +25,7 @@ function CreateWorkout(props){
         // organizes user input
         const formData = new FormData(form);
 
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // adds a board with the entered form input to the database
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/workout`, // adds a workout with the entered form input to the database
               {
                 method: "POST",
                 headers: {

@@ -20,14 +20,13 @@ function FriendsWorkouts(props){
     const [modalID, setModalID] = useState();
     const [modal, toggleModal] = useState(0);
 
-    const user = props.user;
     const friends=props.friends
 
     useEffect(() => {
         fetchWorkouts();
     })
 
-    // fetches all workouts associated with the current user
+    // fetches all workouts associated with the current user's friends
     const fetchWorkouts = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/friends/workouts`,
         {
@@ -57,7 +56,7 @@ function FriendsWorkouts(props){
             <section id="friends-workouts">
                 {workout_cards}
             </section>
-            <WorkoutModal modal={modal} toggleModal={toggleModal} id={modalID}/>
+            <WorkoutModal user={props.user} modal={modal} toggleModal={toggleModal} id={modalID}  add={true}/>
         </>
     )
 }

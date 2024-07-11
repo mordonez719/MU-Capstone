@@ -7,8 +7,13 @@
     align-self: center;
     display: flex;
     align-content: center;
+    flex-direction: column;
 }
 
 .plan-title{
     margin-left: 0px;
+}
+
+.plan-creator {
+    color: rgb(44, 38, 44);
 }

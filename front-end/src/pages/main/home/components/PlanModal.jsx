@@ -76,6 +76,7 @@ function PlanModal(props){
             <section id="plan-modal-container">
                 <h3 id="modal-title">{plan.title}</h3>
                 <p id="modal-desc">{plan.description}</p>
+                {props.add ? <button>Create a Copy</button> : ""}
                 <button id="close-form" onClick={() => props.toggleModal(0)}>X</button>
                 <h4 className="meal-header">Meals:</h4>
                 <section className="meal-container">
