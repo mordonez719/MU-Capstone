@@ -64,12 +64,6 @@ function ExerciseResults(props){
     return (
         <section id="api-exercises">
             <div id="menu">
-                {/* <section id="searcher">
-                    <span className="material-symbols-outlined" onClick={() => handleSearch()}>search</span>
-                    <input id="search-bar" type="text" value={searchQuery} 
-                    onChange={(e) => handleSearchChange(e.target.value)} 
-                    placeholder="Search Excerices..." />
-                </section> */}
                 <SearchExercises />
             </div>
             {loading ? (<p>Loading...</p>) : ( exercises )}

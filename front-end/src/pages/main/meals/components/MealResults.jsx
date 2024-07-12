@@ -67,14 +67,7 @@ function MealResults(props){
     return (
         <section id="api-meals">
             <div id="menu">
-            {/* <section id="searcher">
-                <span className="material-symbols-outlined" onClick={() => handleSearch()}>search</span>
-                <input type="text" id="search-bar"
-                value={searchQuery} 
-                onChange={(e) => handleSearchChange(e.target.value)} 
-                placeholder="Search Meals..." />
-            </section> */}
-            <SearchMeals />
+                <SearchMeals />
             </div>
             {loading ? (<><p>Loading...</p></>) : ( meals )}
         </section>

@@ -72,10 +72,10 @@ function SearchMeals() {
                             </div>
                             <section id="all-slider">
                                 <div className="slider-container">
-                                    First Slider
+                                    Calorie Range Double Slider
                                 </div>
                                 <div className="slider-container">
-                                    Second Slider
+                                    Ingredient Count Single Slider
                                 </div>
                             </section>
                         </section>
