@@ -20,6 +20,7 @@ function FriendsWorkouts(props){
     const [modalID, setModalID] = useState();
     const [modal, toggleModal] = useState(0);
 
+    // initializes list of username's of the current user's friends
     const friends=props.friends
 
     useEffect(() => {

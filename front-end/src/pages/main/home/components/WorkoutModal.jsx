@@ -5,7 +5,7 @@ WorkoutModal.jsx
 Fetches a specific workout plan by the given ID.
 Displays the workout's title and description.
 
-Calls: 
+Calls: ExerciseDisplay
 Called In: AllWorkouts, FriendsWorkouts
 
 */

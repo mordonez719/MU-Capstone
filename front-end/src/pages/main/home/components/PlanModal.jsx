@@ -5,7 +5,7 @@ PlanModal.jsx
 Fetches a specific meal plan by the given ID.
 Displays the meal plan's title and description.
 
-Calls: MealDisplay
+Calls: MealDisplay, FriendsPlans
 Called In: AllMealPlans
 
 */

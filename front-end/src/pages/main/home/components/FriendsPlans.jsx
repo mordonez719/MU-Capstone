@@ -5,7 +5,7 @@ FriendsPlans.jsx
 Fetches all meal plans made by the current user's friends
 and creates a display card for each one.
 
-Calls: 
+Calls: MealCard, PlanModal
 Called In: HomePage
 
 */

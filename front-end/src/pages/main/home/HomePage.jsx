@@ -38,7 +38,7 @@ function HomePage(props) {
         })
         const data = await response.json()
         setFriends(data.friends);
-        setFriendsNames(
+        setFriendsNames( // turns the list of user models into a list of their usernames for fetching workouts and plans
             friends.map((friend) => {
                 return (
                   friend.user

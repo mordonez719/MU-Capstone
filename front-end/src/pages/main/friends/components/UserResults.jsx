@@ -14,11 +14,9 @@ import UserCard from './UserCard';
 import './UserResults.css'
 import { useState } from 'react'
 
-function UserResults(props){
+function UserResults(){
     const [searchQuery, setSearchQuery] = useState("");
     const [found, setFound] = useState();
-
-    const currentUser = props.user;
 
     // finds the user with a name matching the given search query
     const fetchUser = async (query) => {
@@ -47,7 +45,7 @@ function UserResults(props){
     // sets default relation so user can send a friend request
     let relation = "new"
 
-    // populated result display if a user was found
+    // populates result display if a user was found
     if (found){
         friend = <UserCard name={found.user} status={relation}/>
     }
