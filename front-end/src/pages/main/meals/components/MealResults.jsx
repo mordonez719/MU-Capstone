@@ -7,13 +7,14 @@ match the user's query. Implements a loading state while data
 is being fetched.
 
 Calls: MealCard
-Called In: MealsPage
+Called In: MealsPage, SearchMeals
 
 */
 
 import './MealResults.css'
 import MealCard from './MealCard'
-import { useEffect, useState } from 'react'
+import SearchMeals from './SearchMeals'
+import { useState } from 'react'
 
 function MealResults(props){
     const [apiData, fillData] = useState([]);
@@ -66,13 +67,14 @@ function MealResults(props){
     return (
         <section id="api-meals">
             <div id="menu">
-            <section id="searcher">
+            {/* <section id="searcher">
                 <span className="material-symbols-outlined" onClick={() => handleSearch()}>search</span>
                 <input type="text" id="search-bar"
                 value={searchQuery} 
                 onChange={(e) => handleSearchChange(e.target.value)} 
                 placeholder="Search Meals..." />
-            </section>
+            </section> */}
+            <SearchMeals />
             </div>
             {loading ? (<><p>Loading...</p></>) : ( meals )}
         </section>

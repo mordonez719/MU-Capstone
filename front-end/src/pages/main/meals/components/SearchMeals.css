@@ -1,0 +1,62 @@
+#search-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#filters-button{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+#main-search{
+    display: flex;
+    margin-top: 10px;
+}
+
+#search-bar-container{
+    align-self: center;
+    margin-left: 41%;
+}
+
+#filter-menu{
+    display: flex;
+    width: 90%;
+    height: fit-content;
+    background-color: rgb(250, 224, 255);
+    outline: 1px solid black;
+    box-shadow: 1px 1px 6px 5px rgb(220, 220, 220, 0.4);
+    align-self: center;
+    color: black;
+    flex-direction: column;
+}
+
+#all-filters{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+}
+
+.diet-type{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.health{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.dish-type{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.slider-container{
+    height: 50%;
+}

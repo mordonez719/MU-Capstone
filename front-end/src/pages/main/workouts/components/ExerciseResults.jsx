@@ -7,7 +7,7 @@ match the user's query. Users can search for exercise by a name
 or a part of a name. Implements a loading state while data
 is being fetched.
 
-Calls: ExerciseCard
+Calls: ExerciseCard, SearchExercises
 Called In: WorkoutsPage
 
 */
@@ -15,6 +15,7 @@ Called In: WorkoutsPage
 import './ExerciseResults.css'
 import ExerciseCard from './ExerciseCard'
 import { useState } from 'react'
+import SearchExercises from './SearchExercises';
 
 function ExerciseResults(props){
     const [apiData, fillData] = useState([]);
@@ -63,12 +64,13 @@ function ExerciseResults(props){
     return (
         <section id="api-exercises">
             <div id="menu">
-                <section id="searcher">
+                {/* <section id="searcher">
                     <span className="material-symbols-outlined" onClick={() => handleSearch()}>search</span>
                     <input id="search-bar" type="text" value={searchQuery} 
                     onChange={(e) => handleSearchChange(e.target.value)} 
                     placeholder="Search Excerices..." />
-                </section>
+                </section> */}
+                <SearchExercises />
             </div>
             {loading ? (<p>Loading...</p>) : ( exercises )}
         </section>
