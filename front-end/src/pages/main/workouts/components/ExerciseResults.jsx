@@ -19,6 +19,8 @@ import SearchExercises from './SearchExercises';
 
 function ExerciseResults(props){
     const [apiData, fillData] = useState([]);
+
+    // initializes filters for searching
     const [searchQuery, setSearchQuery] = useState("");
     const [muscleGroup, setMuscleGroup] = useState()
     const [exType, setExType] = useState()
@@ -30,6 +32,7 @@ function ExerciseResults(props){
     const fetchData = async (query, muscleGroup, exType) => {
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s"
         
+        // if a user selected an option, populate a filter string
         let muscleQuery = ""
         if (muscleGroup){
             muscleQuery = `&muscle=${muscleGroup}`
@@ -42,13 +45,13 @@ function ExerciseResults(props){
 
         let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${query}${muscleQuery}${typeQuery}`
 
-        console.log(apiURL)
         const options = {
             method: "GET",
             headers: {
             "X-Api-Key": API_KEY,
             },
         };
+
         setLoading(true);
         const response = await fetch(apiURL, options);
         const data = await response.json();
@@ -74,10 +77,6 @@ function ExerciseResults(props){
             exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise} user={props.user} />);
         };
     };
-
-
-    console.log(muscleGroup)
-    console.log(exType)
 
     return (
         <section id="api-exercises">

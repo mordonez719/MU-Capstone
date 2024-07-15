@@ -167,7 +167,6 @@ app.get('/friend/workout/:id', async (req, res) => {
             include: {
                 id: false,
                 username: false,
-                // exercises: true,
             },
         });
     res.status(200).json(workout);

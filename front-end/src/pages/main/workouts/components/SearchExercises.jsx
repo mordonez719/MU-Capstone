@@ -24,7 +24,7 @@ function SearchExercises(props) {
     const types = ["Cardio", "Strength", "Powerlifting", "Stretching"]
     const muscles = ["Abdominals", "Biceps", "Calves", "Chest", "Glutes", "Lats"]
 
-    // makes check boxes with id and name of "type" for each option in "names"
+    // makes check boxes with id and name of "type" for each option in "names." uses the given function to change the filter useStates 
     function make_radios(names, type, func){
         return (
             names.map((option) => {
@@ -37,7 +37,7 @@ function SearchExercises(props) {
         )
     }
 
-    // populizes arrays of check boxes for each field
+    // populizes arrays of check boxes for each field and passes useState functions
     const type_radios = make_radios(types, "type", props.setExType)
     const muscle_radios = make_radios(muscles, "muscle", props.setMuscleGroup)
 
@@ -46,7 +46,6 @@ function SearchExercises(props) {
             <section id="search-container">
                 <section id="main-search">
                     <section id="search-bar-container">
-                        {/* <span className="material-symbols-outlined">search</span> */}
                         <input type="text" id="search-bar" 
                         placeholder="Search Exercises..." onChange={(e)=>props.handleSearchChange(e.target.value)}/>
                     </section>
