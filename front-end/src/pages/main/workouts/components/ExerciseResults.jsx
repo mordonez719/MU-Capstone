@@ -20,15 +20,29 @@ import SearchExercises from './SearchExercises';
 function ExerciseResults(props){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [muscleGroup, setMuscleGroup] = useState()
+    const [exType, setExType] = useState()
 
     // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
 
     // takes a user search query and fetches matching exercises
-    const fetchData = async (query) => {
+    const fetchData = async (query, muscleGroup, exType) => {
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s"
-        let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${query}`
+        
+        let muscleQuery = ""
+        if (muscleGroup){
+            muscleQuery = `&muscle=${muscleGroup}`
+        }
 
+        let typeQuery = ""
+        if (exType){
+            typeQuery = `&type=${exType}`
+        }
+
+        let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${query}${muscleQuery}${typeQuery}`
+
+        console.log(apiURL)
         const options = {
             method: "GET",
             headers: {
@@ -48,7 +62,7 @@ function ExerciseResults(props){
     };
 
     const handleSearch = () => {
-        fetchData(searchQuery);
+        fetchData(searchQuery, muscleGroup, exType);
     }
 
     let exercises = []
@@ -61,10 +75,15 @@ function ExerciseResults(props){
         };
     };
 
+
+    console.log(muscleGroup)
+    console.log(exType)
+
     return (
         <section id="api-exercises">
             <div id="menu">
-                <SearchExercises />
+                <span className="material-symbols-outlined" onClick={handleSearch}>search</span>
+                <SearchExercises handleSearchChange={handleSearchChange} setMuscleGroup={setMuscleGroup} setExType={setExType}/>
             </div>
             {loading ? (<p>Loading...</p>) : ( exercises )}
         </section>

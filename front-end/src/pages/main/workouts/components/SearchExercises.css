@@ -60,3 +60,7 @@
 .slider-container{
     height: 50%;
 }
+
+#all-slider{
+    height: fit-content;
+}

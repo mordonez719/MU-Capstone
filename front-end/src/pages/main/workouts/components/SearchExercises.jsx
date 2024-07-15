@@ -13,7 +13,7 @@ Called In: ExerciseResults
 import './SearchExercises.css'
 import { useState } from 'react'
 
-function SearchExercises() {
+function SearchExercises(props) {
     const [menu, toggleMenu] = useState(0);
 
     function handleMenu(){
@@ -25,12 +25,12 @@ function SearchExercises() {
     const muscles = ["Abdominals", "Biceps", "Calves", "Chest", "Glutes", "Lats"]
 
     // makes check boxes with id and name of "type" for each option in "names"
-    function make_radios(names, type){
+    function make_radios(names, type, func){
         return (
             names.map((option) => {
                 return (
                     <div id={`${type}-item`}>
-                        <input type="radio" id={type} name={type} />{option}
+                        <input type="radio" id={type} name={type} value={option} onChange={(e)=>func(e.target.value)}/>{option}
                     </div>        
                     )
             })
@@ -38,21 +38,20 @@ function SearchExercises() {
     }
 
     // populizes arrays of check boxes for each field
-    const type_checks = make_radios(types, "type")
-    const muscle_checks = make_radios(muscles, "muscle")
-
+    const type_radios = make_radios(types, "type", props.setExType)
+    const muscle_radios = make_radios(muscles, "muscle", props.setMuscleGroup)
 
     return (
         <>
             <section id="search-container">
                 <section id="main-search">
                     <section id="search-bar-container">
-                        <span className="material-symbols-outlined">search</span>
+                        {/* <span className="material-symbols-outlined">search</span> */}
                         <input type="text" id="search-bar" 
-                        placeholder="Search Exercises..." />
+                        placeholder="Search Exercises..." onChange={(e)=>props.handleSearchChange(e.target.value)}/>
                     </section>
                     <button id="filters-button" onClick={handleMenu}>Filters
-                        <span class="material-symbols-outlined">tune</span>
+                        <span className="material-symbols-outlined">tune</span>
                     </button>
                 </section>
                 {menu ? 
@@ -60,14 +59,15 @@ function SearchExercises() {
                         ALL FILTERS HERE
                         <section id="all-filters">
                             <div className="exercise-type"> Types
-                                {type_checks}                        
+                                {type_radios}                        
                             </div>
                             <div className="health"> Muscle Group:
-                                {muscle_checks} 
+                                {muscle_radios} 
                             </div>
                             <section id="all-slider">
+                                Difficulty
                                 <div className="slider-container">
-                                    Difficulty Slider
+                                    <input type="range" id="diff-slider" />
                                 </div>
                             </section>
                         </section>
