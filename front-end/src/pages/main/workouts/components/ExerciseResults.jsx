@@ -54,6 +54,7 @@ function ExerciseResults(props){
             diffQuery = `&difficulty=${difficulty}`
         }
 
+        // puts all queries together to form full string for fetching
         let apiURL = `https://api.api-ninjas.com/v1/exercises?${nameQuery}${muscleQuery}${typeQuery}${diffQuery}`
 
         const options = {

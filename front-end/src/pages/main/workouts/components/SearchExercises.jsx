@@ -55,8 +55,9 @@ function SearchExercises(props) {
     const handleSlide = (event) => {
         setSlider(parseInt(event.target.value));
       };
-      useEffect(() => {
-        switch (slider) {
+
+    useEffect(() => {
+        switch (slider) { // translates slider value to use difficulty to fetch
             case 0:
                 setDifficulty("Beginner");
                 break;

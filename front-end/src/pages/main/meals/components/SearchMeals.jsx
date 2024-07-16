@@ -60,6 +60,27 @@ function SearchMeals(props) {
     const health_checks = make_checks(healths, "health")
     const dish_checks = make_checks(dishes, "dishType")
 
+
+    // sets minimum amount for calorie range
+    const handleMinChange = (event) => {
+        let newVal = parseInt(event.target.value);
+        if ( newVal <= props.maxCal - 100){ // sets min value if at least 100 calories of range
+            props.setMinCal(parseInt(event.target.value));
+        } else if (props.maxCal + 100 <= 3500){ // increase max value to keep 100 range minimum
+            props.setMaxCal(props.maxCal + 100)
+        }
+    }
+
+    // sets maximum amount for calorie range
+    const handleMaxChange = (event) => {
+        let newVal = parseInt(event.target.value);
+        if (newVal >= props.minCal + 100) { // sets max value if at least 100 calories of range
+            props.setMaxCal(parseInt(event.target.value));
+        } else if (props.minCal - 100 >= 0) { // decrease min value to keep 100 range minimum
+            props.setMinCal(props.minCal - 100)
+        }
+    }
+
     return (
         <>
             <section id="search-container">
@@ -87,13 +108,22 @@ function SearchMeals(props) {
                                 {dish_checks} 
                             </div>
                             <section id="all-slider">
-                                Calories:
+                                Calories:  {props.minCal}-{props.maxCal}
                                 <div className="slider-container">
-                                    <input type="range" id="calorie-slider" />
-                                </div>
-                                Ingredient Count
-                                <div className="slider-container">
-                                    <input type="range" id="ingred-slider" />
+                                    <input type="range" className="calorie-slider" id="min-cal"
+                                        min={0}
+                                        max={3500}
+                                        step={100} 
+                                        value={props.minCal}
+                                        onChange={handleMinChange}
+                                    />
+                                    <input type="range" className="calorie-slider" id="max-cal"
+                                        min={0}
+                                        max={3500}
+                                        step={100} 
+                                        value={props.maxCal}
+                                        onChange={handleMaxChange}
+                                    />
                                 </div>
                             </section>
                         </section>

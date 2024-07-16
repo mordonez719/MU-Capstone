@@ -20,13 +20,15 @@ function MealResults(props){
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterMap, setFilterMap] = useState({})
+    const [minCal, setMinCal] = useState(0);
+    const [maxCal, setMaxCal] = useState(3500)
 
     // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
 
     // gets API data, takes a query and the optional filters
-    const fetchData = async (query, filters) => {
-        const baseURL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973${filters}`        
+    const fetchData = async (query, filters, calories) => {
+        const baseURL = `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=967f1e08&app_key=aa2bbb79789e80e9e7a0a3f4ac52e973${filters}${calories}`        
 
         const options = {
             method: "GET",
@@ -36,7 +38,7 @@ function MealResults(props){
             "Accept-Language": "en"
             },  
         };
-
+        
         setLoading(true);
         const response = await fetch(baseURL, options);
         const data = await response.json();
@@ -62,7 +64,9 @@ function MealResults(props){
             }
         }
 
-        fetchData(searchQuery, filters); // passes the types queries and selected filters for fetching
+        let calories = `&calories=${minCal}-${maxCal}` // formats calorie variables for fetching
+
+        fetchData(searchQuery, filters, calories); // passes the types queries and selected filters for fetching
     }
 
     // empty array for meal displays
@@ -72,7 +76,7 @@ function MealResults(props){
     for (let i = 0; i < apiData.length && i < 11; i++){
         let meal = apiData[i];
         if (meal){
-            meals.push(<MealCard id={i} name={meal.recipe.label} calories={meal.recipe.calories} img={meal.recipe.image} user={props.user}>
+            meals.push(<MealCard id={i} name={meal.recipe.label} calories={parseInt(meal.recipe.calories)} img={meal.recipe.image} user={props.user}>
                 </MealCard>);
         };
     };
@@ -81,7 +85,11 @@ function MealResults(props){
         <section id="api-meals">
             <div id="menu">
                 <span className="material-symbols-outlined" onClick={handleSearch}>search</span>
-                <SearchMeals handleSearchChange={handleSearchChange} optionsMap={filterMap} setOptionsMap={setFilterMap}/>
+                <SearchMeals handleSearchChange={handleSearchChange} 
+                optionsMap={filterMap} setOptionsMap={setFilterMap} 
+                minCal={minCal} setMinCal={setMinCal}
+                maxCal={maxCal} setMaxCal={setMaxCal}
+                />
             </div>
             {loading ? (<><p>Loading...</p></>) : ( meals )}
         </section>
