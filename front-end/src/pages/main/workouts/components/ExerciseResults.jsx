@@ -24,15 +24,21 @@ function ExerciseResults(props){
     const [searchQuery, setSearchQuery] = useState("");
     const [muscleGroup, setMuscleGroup] = useState()
     const [exType, setExType] = useState()
+    const [difficulty, setDifficulty] = useState()
 
     // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
 
     // takes a user search query and fetches matching exercises
-    const fetchData = async (query, muscleGroup, exType) => {
+    const fetchData = async (query, muscleGroup, exType, difficulty) => {
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s"
         
         // if a user selected an option, populate a filter string
+        let nameQuery = ""
+        if (query){
+            nameQuery = `&name=${query}`
+        }
+
         let muscleQuery = ""
         if (muscleGroup){
             muscleQuery = `&muscle=${muscleGroup}`
@@ -43,7 +49,12 @@ function ExerciseResults(props){
             typeQuery = `&type=${exType}`
         }
 
-        let apiURL = `https://api.api-ninjas.com/v1/exercises?name=${query}${muscleQuery}${typeQuery}`
+        let diffQuery = ""
+        if (difficulty){
+            diffQuery = `&difficulty=${difficulty}`
+        }
+
+        let apiURL = `https://api.api-ninjas.com/v1/exercises?${nameQuery}${muscleQuery}${typeQuery}${diffQuery}`
 
         const options = {
             method: "GET",
@@ -65,7 +76,7 @@ function ExerciseResults(props){
     };
 
     const handleSearch = () => {
-        fetchData(searchQuery, muscleGroup, exType);
+        fetchData(searchQuery, muscleGroup, exType, difficulty);
     }
 
     let exercises = []
@@ -82,7 +93,7 @@ function ExerciseResults(props){
         <section id="api-exercises">
             <div id="menu">
                 <span className="material-symbols-outlined" onClick={handleSearch}>search</span>
-                <SearchExercises handleSearchChange={handleSearchChange} setMuscleGroup={setMuscleGroup} setExType={setExType}/>
+                <SearchExercises handleSearchChange={handleSearchChange} setMuscleGroup={setMuscleGroup} setExType={setExType} difficulty={difficulty} setDifficulty={setDifficulty}/>
             </div>
             {loading ? (<p>Loading...</p>) : ( exercises )}
         </section>
