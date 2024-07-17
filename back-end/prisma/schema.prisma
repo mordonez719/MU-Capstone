@@ -22,6 +22,7 @@ model User {
   received User[] @relation("UserRequests")
   friends User[] @relation("friends")
   friendOf User[] @relation("friends")
+  searches String[]
 }
 
 model Workout {

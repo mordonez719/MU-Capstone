@@ -1,0 +1,6 @@
+#recommendation-container{
+    outline: 2px dashed #ddcfff;
+    width: 95%;
+    align-self: center;
+    display: flex;
+}

@@ -335,6 +335,42 @@ app.get('/friendlist', async (req, res) => {
     res.status(200).json(user);
 });
 
+// adds a new search to a user's kept history
+app.put('/search', async (req, res) => {
+    const { newSearch } = req.body;
+    let updatedCurrent = await prisma.user.findUnique({
+        where: {user: currentUser}
+    })
+    if (updatedCurrent.searches.length < 5) { // if there are less than 5 recent searches, push a new one
+        updatedCurrent = await prisma.user.update({
+            where: {user: currentUser},
+            data: {
+                searches: {
+                    "push": newSearch
+                }
+            }
+        })
+    } else { // if there are already five searches, keep the most recent four and add the new one
+        updatedCurrent = await prisma.user.update({
+            where: {user: currentUser},
+            data: {
+                searches: {
+                    "set": [...updatedCurrent.searches.slice(1), newSearch]
+                }
+            }
+        })
+    }
+    res.status(200).json(updatedCurrent);
+})
+
+// retrieves user's recent search history
+app.post('/history', async (req, res) => {
+    const {username} = req.body
+    const user = await prisma.user.findUnique({
+        where: { user: username}
+    });
+    res.status(200).json(user.searches);
+});
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)

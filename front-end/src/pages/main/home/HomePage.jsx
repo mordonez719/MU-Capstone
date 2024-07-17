@@ -6,7 +6,7 @@ Sets up the display of workouts and meal plans libraries.
 Create workout button opens a form for the user to enter a
 name and description for an empty workout to be displayed.
 
-Calls: AllMealPlans, AllWorkouts, CreatePlan, CreateWorkout, FriendsWorkouts, FriendsPlans
+Calls: AllMealPlans, AllWorkouts, CreatePlan, CreateWorkout, FriendsWorkouts, FriendsPlans, Recommendations
 Called In: MainPage
 
 */
@@ -18,6 +18,7 @@ import CreateWorkout from './components/CreateWorkout';
 import CreatePlan from './components/CreatePlan.jsx'
 import FriendsWorkouts from './components/FriendsWorkouts.jsx'
 import FriendsPlans from './components/FriendsPlans.jsx';
+import Recommendations from './components/Recommend/Recommendations.jsx';
 import { useState, useEffect } from 'react';
 
 function HomePage(props) {
@@ -53,6 +54,11 @@ function HomePage(props) {
 
     return (
         <div id="home-content">
+            <br></br>
+            <div className="home-menu">
+                <h3 className='home-header'>Recommended For You: </h3>
+            </div>
+            <Recommendations user={props.user}/>
             <br></br>
             <div className="home-menu">
                 <h3 className='home-header'>Your Workouts: </h3>
