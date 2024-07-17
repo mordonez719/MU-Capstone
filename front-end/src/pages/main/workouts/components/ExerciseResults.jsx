@@ -22,9 +22,9 @@ function ExerciseResults(props){
 
     // initializes filters for searching
     const [searchQuery, setSearchQuery] = useState("");
-    const [muscleGroup, setMuscleGroup] = useState()
-    const [exType, setExType] = useState()
-    const [difficulty, setDifficulty] = useState()
+    const [muscleGroup, setMuscleGroup] = useState("Any")
+    const [exType, setExType] = useState("Any")
+    const [difficulty, setDifficulty] = useState("Any")
 
     // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
@@ -40,17 +40,17 @@ function ExerciseResults(props){
         }
 
         let muscleQuery = ""
-        if (muscleGroup){
+        if (muscleGroup != "Any"){
             muscleQuery = `&muscle=${muscleGroup}`
         }
 
         let typeQuery = ""
-        if (exType){
+        if (exType !="Any"){
             typeQuery = `&type=${exType}`
         }
 
         let diffQuery = ""
-        if (difficulty){
+        if (difficulty !="Any"){
             diffQuery = `&difficulty=${difficulty}`
         }
 
@@ -73,7 +73,7 @@ function ExerciseResults(props){
     }
 
     // updates the user's exercise search history
-    const updateHistory = async (query) => {
+    const updateHistory = async (query, type, muscle, difficulty) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/search/exercise`,
         {
             method: "PUT",
@@ -81,7 +81,10 @@ function ExerciseResults(props){
                 "Content-Type": "application/json",
                 },
             body: JSON.stringify({
-                "newSearch": query
+                "newSearch": query,
+                "type": type,
+                "muscle": muscle,
+                "difficulty": difficulty
                 }),
         }
         )
@@ -93,7 +96,7 @@ function ExerciseResults(props){
 
     const handleSearch = () => {
         fetchData(searchQuery, muscleGroup, exType, difficulty); // fetches exercises based of query and filters
-        updateHistory(searchQuery) // adds search query to user's history
+        updateHistory(searchQuery, exType, muscleGroup, difficulty); // adds search query and filters to user's history
     }
 
     let exercises = []

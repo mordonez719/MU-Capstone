@@ -337,7 +337,7 @@ app.get('/friendlist', async (req, res) => {
 
 // adds a new exercise search to a user's kept history
 app.put('/search/exercise', async (req, res) => {
-    const { newSearch } = req.body;
+    const { newSearch, type, muscle, difficulty } = req.body;
     let updatedCurrent = await prisma.user.findUnique({
         where: {user: currentUser}
     })
@@ -347,6 +347,15 @@ app.put('/search/exercise', async (req, res) => {
             data: {
                 exSearches: {
                     "push": newSearch
+                },
+                exTypes: {
+                    "push": type
+                },
+                muscles: {
+                    "push": muscle
+                },
+                difficulties: {
+                    "push": difficulty
                 }
             }
         })
@@ -356,6 +365,15 @@ app.put('/search/exercise', async (req, res) => {
             data: {
                 exSearches: {
                     "set": [...updatedCurrent.exSearches.slice(1), newSearch]
+                },
+                exTypes: {
+                    "set": [...updatedCurrent.exTypes.slice(1), type]
+                },
+                muscles: {
+                    "set": [...updatedCurrent.muscles.slice(1), muscle]
+                },
+                difficulties: {
+                    "set": [...updatedCurrent.difficulties.slice(1), difficulty]
                 }
             }
         })
@@ -365,7 +383,7 @@ app.put('/search/exercise', async (req, res) => {
 
 // adds a new meal search to a user's kept history
 app.put('/search/meal', async (req, res) => {
-    const { newSearch } = req.body;
+    const { newSearch, newDiets, newHealths, newTypes, min, max } = req.body;
     let updatedCurrent = await prisma.user.findUnique({
         where: {user: currentUser}
     })
@@ -375,15 +393,45 @@ app.put('/search/meal', async (req, res) => {
             data: {
                 mealSearches: {
                     "push": newSearch
+                },
+                diets: {
+                    "push": newDiets
+                },
+                healths: {
+                    "push": newHealths
+                },
+                dishTypes: {
+                    "push": newTypes
+                },
+                caloricMin: {
+                    "push": min
+                },
+                caloricMax: {
+                    "push": max
                 }
             }
         })
-    } else { // if there are already five searches, keep the most recent four and add the new one
+    } else { // if there are already five searches, keep recent data and add new data
         updatedCurrent = await prisma.user.update({
             where: {user: currentUser},
             data: {
                 mealSearches: {
                     "set": [...updatedCurrent.mealSearches.slice(1), newSearch]
+                },
+                diets: { // since you can check multiple diets, keep 4 recently selected instead of 4 sets
+                    "set": [...updatedCurrent.diets.slice(-5), ...newDiets]
+                },
+                healths: {
+                    "set": [...updatedCurrent.healths.slice(-5), ...newHealths]
+                },
+                dishTypes: {
+                    "set": [...updatedCurrent.dishTypes.slice(-5), ...newTypes]
+                },
+                caloricMin: {
+                    "set": [...updatedCurrent.caloricMin.slice(1), min]
+                },
+                caloricMax: {
+                    "set": [...updatedCurrent.caloricMax.slice(1), max]
                 }
             }
         })

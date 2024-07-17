@@ -40,7 +40,7 @@ function SearchExercises(props) {
                     )
             })}
             <div id={`${type}-item`}>
-                <input type="radio" id={type} name={type} value={''} defaultChecked={true} onChange={(e)=>func(e.target.value)}/>{'All'}
+                <input type="radio" id={type} name={type} value={'Any'} defaultChecked={true} onChange={(e)=>func(e.target.value)}/>{'All'}
             </div> 
             </>
         )
@@ -68,7 +68,7 @@ function SearchExercises(props) {
                 setDifficulty("Expert");
                 break;
             case 3:
-                setDifficulty();
+                setDifficulty("Any");
                 break;
             default:
                 break;
