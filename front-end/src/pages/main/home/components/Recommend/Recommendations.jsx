@@ -31,15 +31,44 @@ function Recommendations(props) {
         })
         const data = await response.json()
         setHistory(data)
+        // console.log(history)
+        // if (history) {
+        //     // console.log("true")
+        //     let words = '';
+        //     for (const word in history){
+        //         words.concat(`rel_trg=${word}`)
+        //         console.log(words)
+        //         }
+        // }
     };
 
     useEffect(() => {
         fetchHistory();
-      }, [])
+      },[])
 
-    // TDOD: origanize searches to url format
+    useEffect(() => {
+        console.log(history)
+        if (history) {
+            console.log("true")
+            let words = `rel_trg=${history[0]}`;
+            for (let i = 1; i < history.length; i++){
+                console.log(history[i])
+                words = words.concat(`&rel_trg=${history[i]}`)
+                console.log(words)
+                }
+            fetchData(words)
+        }
+    }, [history])
 
     // TODO: call top words api
+    const fetchData = async (words) => {
+        const baseURL = `https://api.datamuse.com/words?${words}`        
+
+        const response = await fetch(baseURL);
+        const data = await response.json();
+
+        console.log(data)
+    }
 
     // TODO: print top relevant search terms
     

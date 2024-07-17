@@ -24,6 +24,14 @@ model User {
   friendOf User[] @relation("friends")
   exSearches String[]
   mealSearches String[]
+  exTypes String[]
+  muscles String[]
+  difficulties String[]
+  diets String[]
+  healths String[]
+  dishTypes String[]
+  caloricMin Int[]
+  caloricMax Int[]
 }
 
 model Workout {
