@@ -335,17 +335,17 @@ app.get('/friendlist', async (req, res) => {
     res.status(200).json(user);
 });
 
-// adds a new search to a user's kept history
-app.put('/search', async (req, res) => {
+// adds a new exercise search to a user's kept history
+app.put('/search/exercise', async (req, res) => {
     const { newSearch } = req.body;
     let updatedCurrent = await prisma.user.findUnique({
         where: {user: currentUser}
     })
-    if (updatedCurrent.searches.length < 5) { // if there are less than 5 recent searches, push a new one
+    if (updatedCurrent.exSearches.length < 5) { // if there are less than 5 recent searches, push a new one
         updatedCurrent = await prisma.user.update({
             where: {user: currentUser},
             data: {
-                searches: {
+                exSearches: {
                     "push": newSearch
                 }
             }
@@ -354,8 +354,8 @@ app.put('/search', async (req, res) => {
         updatedCurrent = await prisma.user.update({
             where: {user: currentUser},
             data: {
-                searches: {
-                    "set": [...updatedCurrent.searches.slice(1), newSearch]
+                exSearches: {
+                    "set": [...updatedCurrent.exSearches.slice(1), newSearch]
                 }
             }
         })
@@ -363,13 +363,50 @@ app.put('/search', async (req, res) => {
     res.status(200).json(updatedCurrent);
 })
 
-// retrieves user's recent search history
-app.post('/history', async (req, res) => {
+// adds a new meal search to a user's kept history
+app.put('/search/meal', async (req, res) => {
+    const { newSearch } = req.body;
+    let updatedCurrent = await prisma.user.findUnique({
+        where: {user: currentUser}
+    })
+    if (updatedCurrent.mealSearches.length < 5) { // if there are less than 5 recent searches, push a new one
+        updatedCurrent = await prisma.user.update({
+            where: {user: currentUser},
+            data: {
+                mealSearches: {
+                    "push": newSearch
+                }
+            }
+        })
+    } else { // if there are already five searches, keep the most recent four and add the new one
+        updatedCurrent = await prisma.user.update({
+            where: {user: currentUser},
+            data: {
+                mealSearches: {
+                    "set": [...updatedCurrent.mealSearches.slice(1), newSearch]
+                }
+            }
+        })
+    }
+    res.status(200).json(updatedCurrent);
+})
+
+// retrieves user's recent exercise search history
+app.post('/history/exercise', async (req, res) => {
     const {username} = req.body
     const user = await prisma.user.findUnique({
         where: { user: username}
     });
-    res.status(200).json(user.searches);
+    res.status(200).json(user.exSearches);
+});
+
+// retrieves user's recent meal search history
+app.post('/history/meal', async (req, res) => {
+    const {username} = req.body
+    const user = await prisma.user.findUnique({
+        where: { user: username}
+    });
+    res.status(200).json(user.mealSearches);
 });
 
 const server = app.listen(PORT, () => {

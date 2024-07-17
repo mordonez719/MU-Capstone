@@ -47,6 +47,21 @@ function MealResults(props){
         setLoading(false);
     }
 
+    // updates the user's meal search history
+    const updateHistory = async (query) => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/search/meal`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify({
+                "newSearch": query
+                }),
+        }
+        )
+    }
+
     const handleSearchChange = (value) => {
         setSearchQuery(value);
     };
@@ -67,6 +82,7 @@ function MealResults(props){
         let calories = `&calories=${minCal}-${maxCal}` // formats calorie variables for fetching
 
         fetchData(searchQuery, filters, calories); // passes the types queries and selected filters for fetching
+        updateHistory(searchQuery) // adds search query to user's history
     }
 
     // empty array for meal displays

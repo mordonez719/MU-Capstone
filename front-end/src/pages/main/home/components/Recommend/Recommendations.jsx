@@ -19,8 +19,7 @@ function Recommendations(props) {
 
     // get search history
     const fetchHistory = async () => {
-        console.log(props.user)
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/history`,
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/history/meal`,
         {
             method: "POST",
             headers: {
@@ -38,11 +37,12 @@ function Recommendations(props) {
         fetchHistory();
       }, [])
 
-    // origanize search to url format
+    // TDOD: origanize searches to url format
 
-    // call top words api
+    // TODO: call top words api
 
-    // print top relevant search terms
+    // TODO: print top relevant search terms
+    
     return (
         <>
         <div id="recommendation-container"> R

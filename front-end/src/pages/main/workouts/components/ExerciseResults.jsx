@@ -72,12 +72,28 @@ function ExerciseResults(props){
         setLoading(false);
     }
 
+    // updates the user's exercise search history
+    const updateHistory = async (query) => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/search/exercise`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify({
+                "newSearch": query
+                }),
+        }
+        )
+    }
+
     const handleSearchChange = (value) => {
         setSearchQuery(value);
     };
 
     const handleSearch = () => {
-        fetchData(searchQuery, muscleGroup, exType, difficulty);
+        fetchData(searchQuery, muscleGroup, exType, difficulty); // fetches exercises based of query and filters
+        updateHistory(searchQuery) // adds search query to user's history
     }
 
     let exercises = []
