@@ -20,6 +20,7 @@ function Recommendations(props) {
     const [difficulties, setDiffs] = useState([])
 
     const user = props.user
+    let topWords = []
 
     // get search history
     const fetchHistory = async () => {
@@ -43,20 +44,25 @@ function Recommendations(props) {
 
     useEffect(() => {
         if (history) {
-            let words = `rel_trg=${history[0]}`;
-            for (let i = 1; i < history.length; i++){
-                if (history[i]){
-                words = words.concat(`&rel_trg=${history[i]}`)
-                }}
-            fetchData(words)
+            fetchData()
         }
+
+        const sortedTypes = reduceSort(exTypes)
+        const sortedMuscles = reduceSort(muscles);
+        const sortedDiffs = reduceSort(difficulties);
+
     }, [history])
 
     // TODO: call top words api
-    const fetchData = async (words) => {
-        const baseURL = `https://api.datamuse.com/words?${words}`  
-        const response = await fetch(baseURL);
-        const data = await response.json();
+    const fetchData = async () => {
+        for (let index in history){
+            if (history[index]) {
+                const baseURL = `https://api.datamuse.com/words?ml=${history[index]}&topics=workout,exercise,muscle`  
+                const response = await fetch(baseURL);
+                const data = await response.json();
+                topWords.push(data[0].word)
+            }
+        }
     }
 
     // reduces an array to hold each value once, sorted by frequency
@@ -69,6 +75,8 @@ function Recommendations(props) {
                 frequencyMap[filter]++;
             }
         });
+        const orderedMap = Object.entries(frequencyMap).sort((a,b) => b[1] - a[1]);
+        return orderedMap.map(([word]) => word);
     }
     
     return (

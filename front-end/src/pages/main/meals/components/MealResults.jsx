@@ -17,11 +17,14 @@ import SearchMeals from './SearchMeals'
 import { useState } from 'react'
 
 function MealResults(props){
+    const defaultMin = 0;
+    const defaultMax = 3500;
+
     const [apiData, fillData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filterMap, setFilterMap] = useState({})
-    const [minCal, setMinCal] = useState(0);
-    const [maxCal, setMaxCal] = useState(3500)
+    const [minCal, setMinCal] = useState(defaultMin);
+    const [maxCal, setMaxCal] = useState(defaultMax)
 
     // determines if the data is still being fetched
     const [loading, setLoading] = useState(false);
