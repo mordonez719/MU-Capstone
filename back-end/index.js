@@ -70,6 +70,13 @@ app.post("/logout", async (req, res) => {
     currentUser = "";
 })
 
+// gets current user data
+app.get('/user/data', async (req, res) => {
+    const user = await prisma.user.findUnique({
+        where: { user: currentUser},
+    });
+    res.status(200).json(user);
+});
 
 // create a workout for a specific user
 app.post('/user/workout', async (req, res) => {
