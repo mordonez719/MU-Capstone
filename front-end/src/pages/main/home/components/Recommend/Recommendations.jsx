@@ -2,7 +2,7 @@
 
 Recommendations.jsx
 
-Displays all meal and exercise recommendations based on
+Generates and displays exercise recommendations based on
 collected user data.
 
 Calls:
@@ -21,6 +21,7 @@ function Recommendations(props) {
 
     const user = props.user
     let topWords = []
+    let searches = []
 
     // get search history
     const fetchHistory = async () => {
@@ -32,10 +33,10 @@ function Recommendations(props) {
             },
         })
         const data = await response.json()
-        setHistory(data.exSearches)
-        setExTypes(data.exTypes)
-        setMuscles(data.muscles)
-        setDiffs(data.difficulties)
+        setHistory(data.exSearches) // recent queries
+        setExTypes(data.exTypes) // recent type filters
+        setMuscles(data.muscles) // recent muscle filters
+        setDiffs(data.difficulties) // recent difficulty filters
     };
 
     useEffect(() => {
@@ -44,17 +45,19 @@ function Recommendations(props) {
 
     useEffect(() => {
         if (history) {
-            fetchData()
+            fetchWords().then(() => {
+                const sortedWords = reduceSort(topWords)
+                const sortedTypes = reduceSort(exTypes)
+                const sortedMuscles = reduceSort(muscles);
+                const sortedDiffs = reduceSort(difficulties);
+                listSearches(sortedWords, sortedMuscles, sortedTypes, sortedDiffs) // generate searches with sorted user data
+                console.log(searches)
+            })
         }
-
-        const sortedTypes = reduceSort(exTypes)
-        const sortedMuscles = reduceSort(muscles);
-        const sortedDiffs = reduceSort(difficulties);
-
     }, [history])
 
-    // TODO: call top words api
-    const fetchData = async () => {
+    // call top words api to find related words to recent queries
+    const fetchWords = async () => {
         for (let index in history){
             if (history[index]) {
                 const baseURL = `https://api.datamuse.com/words?ml=${history[index]}&topics=workout,exercise,muscle`  
@@ -78,7 +81,44 @@ function Recommendations(props) {
         const orderedMap = Object.entries(frequencyMap).sort((a,b) => b[1] - a[1]);
         return orderedMap.map(([word]) => word);
     }
-    
+
+    // generates a list of searches the user might like; fields in order of importance: queries, muscle groups, type, difficulty
+    function listSearches(topQueries, topMuscles, topTypes, topDifficulties){
+        for (let i = 0; i < topQueries.length; i++) {
+            let search_map = {}
+            search_map["query"] = topQueries[i];
+            search_map["muscle"] = "Any";
+            search_map["type"] = "Any";
+            search_map["difficulty"] = "Any";
+            searches.push(search_map) // add a no-filter search for related queries
+        }
+        for (let i = 0; i < topMuscles.length; i++) { // iterate through sorted filters in order of category weight and generate searches
+            for (let j = 0; j < topTypes.length; j++) {
+                for (let k = 0; k < topDifficulties.length; k++) {
+                    if (searches.length >= 10) { // stop if 10 searches have been generated
+                        break;
+                    }
+                    if (topMuscles[i] === "Any" && topTypes[j] === "Any" && topDifficulties[k] === "Any"){
+                        break; // if no-filter search is reached before the array reaches ten, move to next filter -> postponing no-filter search allows for more personalized recs.
+                    }
+                    let search_map = {}
+                    search_map["query"] = "";
+                    search_map["muscle"] = topMuscles[i];
+                    search_map["type"] = topTypes[j];
+                    search_map["difficulty"] = topDifficulties[k];
+                    searches.push(search_map) // add search with current filters
+                }
+            }
+        }
+        let search_map = {}
+        search_map["query"] = "";
+        search_map["muscle"] = "Any";
+        search_map["type"] = "Any";
+        search_map["difficulty"] = "Any";
+        searches.push(search_map) // adds a no-filter search, will recommend the top results if no results were found from the user's data or if the user is new
+    }
+
+
     return (
         <>
         <div id="recommendation-container"> Recommendations Here
