@@ -18,6 +18,7 @@ function Recommendations(props) {
     const [exTypes, setExTypes] = useState([])
     const [muscles, setMuscles] = useState([])
     const [difficulties, setDiffs] = useState([])
+    const [added, setAdded] = useState([])
 
     const user = props.user
     let topWords = []
@@ -39,8 +40,23 @@ function Recommendations(props) {
         setDiffs(data.difficulties) // recent difficulty filters
     };
 
+    // get names of exercises previously added by user
+    const fetchAdded = async () => {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/exercises`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const data = await response.json()
+        setAdded(data);
+        // console.log(!added.includes("fake"))
+    };
+
     useEffect(() => {
         fetchHistory();
+        fetchAdded()
       },[])
 
     useEffect(() => {
@@ -159,17 +175,37 @@ function Recommendations(props) {
 
         //////////////
 
-        // const response = await fetch(apiURL, options);
-        // const data = await response.json();
+        const response = await fetch(apiURL, options);
+        const data = await response.json();
 
+        // console.log(added)
         // console.log(data)
+
+        console.log(added)
+        // let temp_name = "bicep curl"
+        // console.log(temp_name)
+        // if (added.includes(temp_name)) {
+        //     results.push(temp_name)
+        // }
+
+        for (let i = 0; i < data.length; i++){
+            let exercise = data[i];
+            console.log(exercise.name)
+            console.log(!added.includes(exercise.name))
+            if (!added.includes(exercise.name)){
+                results.push(exercise)
+            }
+            if (results.length === 10) break;
+        }
+        if (results.length === 10) break;
 
         //////////////
 
         // results.push(data)
         // if (results.length === 10) break;
     }
-        // console.log(`results: ${JSON.stringify(results)}`)
+        console.log(results)
+        console.log(`results: ${results}`)
     
     }
 
