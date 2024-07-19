@@ -203,6 +203,29 @@ app.get('/workout/:id/exercises', async (req, res) => {
     res.json(workout_exercises)
 }); 
 
+// gets all exercises associated with a user
+app.get('/exercises', async (req, res) => {
+    const exercises = []
+
+    const workouts = await prisma.workout.findMany({
+        where: {
+            username: currentUser,
+        },
+    });
+
+    for (let i = 0; i < workouts.length; i++){
+        const workout_exercises = await prisma.exercise.findMany({
+            where: {
+                workoutID: parseInt(workouts[i].id),
+            },
+        });
+        for (let i = 0; i < workout_exercises.length; i++){
+            exercises.push(workout_exercises[i].name)
+        }
+    }
+    res.json(exercises)
+});
+
 // gets a meal plan with the given unique ID
 app.get('/plan/:id', async (req, res) => {
     const { id } = req.params
