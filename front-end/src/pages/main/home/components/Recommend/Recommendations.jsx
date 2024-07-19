@@ -51,7 +51,7 @@ function Recommendations(props) {
                 const sortedMuscles = reduceSort(muscles);
                 const sortedDiffs = reduceSort(difficulties);
                 listSearches(sortedWords, sortedMuscles, sortedTypes, sortedDiffs) // generate searches with sorted user data
-                console.log(searches)
+                fetchData(searches)
             })
         }
     }, [history])
@@ -84,18 +84,22 @@ function Recommendations(props) {
 
     // generates a list of searches the user might like; fields in order of importance: queries, muscle groups, type, difficulty
     function listSearches(topQueries, topMuscles, topTypes, topDifficulties){
-        for (let i = 0; i < topQueries.length; i++) {
-            let search_map = {}
-            search_map["query"] = topQueries[i];
-            search_map["muscle"] = "Any";
-            search_map["type"] = "Any";
-            search_map["difficulty"] = "Any";
-            searches.push(search_map) // add a no-filter search for related queries
-        }
+       
+       
+        // for (let i = 0; i < topQueries.length; i++) {
+        //     let search_map = {}
+        //     search_map["query"] = topQueries[i];
+        //     search_map["muscle"] = "Any";
+        //     search_map["type"] = "Any";
+        //     search_map["difficulty"] = "Any";
+        //     searches.push(search_map) // add a no-filter search for related queries
+        // }
+
+
         for (let i = 0; i < topMuscles.length; i++) { // iterate through sorted filters in order of category weight and generate searches
             for (let j = 0; j < topTypes.length; j++) {
                 for (let k = 0; k < topDifficulties.length; k++) {
-                    if (searches.length >= 10) { // stop if 10 searches have been generated
+                    if (searches.length >= 0) { // stop if 10 searches have been generated
                         break;
                     }
                     if (topMuscles[i] === "Any" && topTypes[j] === "Any" && topDifficulties[k] === "Any"){
@@ -114,8 +118,59 @@ function Recommendations(props) {
         search_map["query"] = "";
         search_map["muscle"] = "Any";
         search_map["type"] = "Any";
-        search_map["difficulty"] = "Any";
-        searches.push(search_map) // adds a no-filter search, will recommend the top results if no results were found from the user's data or if the user is new
+        search_map["difficulty"] = "Beginner";
+        searches.push(search_map) // adds a beginner search, will recommend beginner exercises if no results were found from the user's data or if the user is new
+    }
+
+    const fetchData = async (searches) => {
+        console.log("top")
+        const results = [];
+        const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s";
+        
+        for (let i = 0; i < searches.length; i++){
+            let search = searches[i]
+        // if a user selected an option, populate a filter string
+        let nameQuery = ""
+        if (search.query){
+            nameQuery = `&name=${search.query}`}
+
+        let muscleQuery = ""
+        if (search.muscle != "Any"){
+            muscleQuery = `&muscle=${search.muscle}`}
+        
+        let typeQuery = ""
+
+        if (search.type !="Any"){
+            typeQuery = `&type=${search.type}`}
+
+        let diffQuery = ""
+        if (search.difficulty !="Any"){
+            diffQuery = `&difficulty=${search.difficulty}`}
+
+        // puts all queries together to form full string for fetching
+        let apiURL = `https://api.api-ninjas.com/v1/exercises?${nameQuery}${muscleQuery}${typeQuery}${diffQuery}`
+
+        const options = {
+            method: "GET",
+            headers: {
+            "X-Api-Key": API_KEY,
+            },
+        };
+
+        //////////////
+
+        // const response = await fetch(apiURL, options);
+        // const data = await response.json();
+
+        // console.log(data)
+
+        //////////////
+
+        // results.push(data)
+        // if (results.length === 10) break;
+    }
+        // console.log(`results: ${JSON.stringify(results)}`)
+    
     }
 
 
