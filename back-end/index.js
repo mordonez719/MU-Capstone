@@ -219,6 +219,17 @@ app.post('/workout/exercise', async (req, res) => {
     res.status(201).json(newExercise)
 });
 
+// get the exercises that were added to workouts most recently by the current user
+app.get('/recent/exercises', async (req, res) => {
+    const current = await prisma.user.findUnique({
+        where: {user: currentUser},
+        include: {
+            recentAdds: true,
+        }
+    })
+    res.json(current.recentAdds)
+}); 
+
 // fetches exercises for the workout with the given id
 app.get('/workout/:id/exercises', async (req, res) => {
     const { id } = req.params
