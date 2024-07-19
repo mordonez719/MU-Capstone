@@ -18,8 +18,9 @@ function ExerciseCard(props){
     return (
         <section className="exercise-card-back">
             <h2 className='ex-name'>{props.name}</h2>
-            <WorkoutDropdown user={props.user} exName={props.name}/>
-        </section>
+            <WorkoutDropdown user={props.user} exName={props.name}
+            type={props.type} muscle={props.muscle} equipment={props.equipment} difficulty={props.difficulty} instructions={props.instructions}/>
+      </section>
     )
 }
 

@@ -181,13 +181,41 @@ app.get('/friend/workout/:id', async (req, res) => {
 
 // add an exercise to a workout's exercise list
 app.post('/workout/exercise', async (req, res) => {
-    const { name, workoutID } = req.body;
+    const { name, type, muscle,  equipment, difficulty, instructions, workoutID } = req.body;
     const newExercise = await prisma.exercise.create({
         data: {
             name,
-            workoutID
+            type,
+            muscle,
+            equipment,
+            difficulty,
+            instructions,
+            workoutID,
+            userID: currentUser
         }
     })
+    const updatedCurrent = await prisma.user.update({
+        where: {user: currentUser},
+        data: {
+            recentAdds: {connect: newExercise},
+        }
+    })
+    let current = await prisma.user.findUnique({
+        where: {user: currentUser},
+        include: {
+            recentAdds: true,
+        }
+    })
+    if (current.recentAdds.length >= 3){
+        const updated = await prisma.user.update({
+            where: {user: currentUser},
+            data: {
+                recentAdds: {
+                    disconnect: current.recentAdds[0]
+                },
+            }
+        })
+    }
     res.status(201).json(newExercise)
 });
 
@@ -203,7 +231,7 @@ app.get('/workout/:id/exercises', async (req, res) => {
     res.json(workout_exercises)
 }); 
 
-// gets all exercises associated with a user
+// gets all exercise names associated with a user
 app.get('/exercises', async (req, res) => {
     const exercises = []
 

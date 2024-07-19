@@ -105,7 +105,9 @@ function ExerciseResults(props){
     for (let i = 0; i < apiData.length; i++){
         let exercise = apiData[i];
         if (exercise){
-            exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise} user={props.user} />);
+            exercises.push(<ExerciseCard id={i} name={exercise.name} exercise={exercise} user={props.user} 
+            type={exercise.type} muscle={exercise.muscle} equipment={exercise.equipment} difficulty={exercise.difficulty} instructions={exercise.instructions}/>
+        );
         };
     };
 

@@ -14,6 +14,11 @@ import './Recommendations.css'
 import { useState, useEffect } from 'react'
 
 function Recommendations(props) {
+    // const recommender = new Sample({
+    //     minScore: 0.1,
+    //     maxSimilarDocuments: 100
+    //   });
+
     const [history, setHistory] = useState([])
     const [exTypes, setExTypes] = useState([])
     const [muscles, setMuscles] = useState([])
@@ -23,6 +28,8 @@ function Recommendations(props) {
     const user = props.user
     let topWords = []
     let searches = []
+    const results = [];
+    const toCompare = [];
 
     // get search history
     const fetchHistory = async () => {
@@ -67,7 +74,9 @@ function Recommendations(props) {
                 const sortedMuscles = reduceSort(muscles);
                 const sortedDiffs = reduceSort(difficulties);
                 listSearches(sortedWords, sortedMuscles, sortedTypes, sortedDiffs) // generate searches with sorted user data
-                fetchData(searches)
+                fetchData(searches).then(() => {
+                    compare();
+                })
             })
         }
     }, [history])
@@ -140,74 +149,81 @@ function Recommendations(props) {
 
     const fetchData = async (searches) => {
         console.log("top")
-        const results = [];
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s";
         
         for (let i = 0; i < searches.length; i++){
             let search = searches[i]
-        // if a user selected an option, populate a filter string
-        let nameQuery = ""
-        if (search.query){
-            nameQuery = `&name=${search.query}`}
-
-        let muscleQuery = ""
-        if (search.muscle != "Any"){
-            muscleQuery = `&muscle=${search.muscle}`}
         
-        let typeQuery = ""
+            // if a user selected an option, populate a filter string
+            let nameQuery = ""
+            if (search.query){
+                nameQuery = `&name=${search.query}`}
 
-        if (search.type !="Any"){
-            typeQuery = `&type=${search.type}`}
+            let muscleQuery = ""
+            if (search.muscle != "Any"){
+                muscleQuery = `&muscle=${search.muscle}`}
+            
+            let typeQuery = ""
 
-        let diffQuery = ""
-        if (search.difficulty !="Any"){
-            diffQuery = `&difficulty=${search.difficulty}`}
+            if (search.type !="Any"){
+                typeQuery = `&type=${search.type}`}
 
-        // puts all queries together to form full string for fetching
-        let apiURL = `https://api.api-ninjas.com/v1/exercises?${nameQuery}${muscleQuery}${typeQuery}${diffQuery}`
+            let diffQuery = ""
+            if (search.difficulty !="Any"){
+                diffQuery = `&difficulty=${search.difficulty}`}
 
-        const options = {
-            method: "GET",
-            headers: {
-            "X-Api-Key": API_KEY,
-            },
-        };
+            // puts all queries together to form full string for fetching
+            let apiURL = `https://api.api-ninjas.com/v1/exercises?${nameQuery}${muscleQuery}${typeQuery}${diffQuery}`
 
-        //////////////
+            const options = {
+                method: "GET",
+                headers: {
+                "X-Api-Key": API_KEY,
+                },
+            };
 
-        const response = await fetch(apiURL, options);
-        const data = await response.json();
+            // const response = await fetch(apiURL, options); ///////////////////////////
+            // const data = await response.json();
 
-        // console.log(added)
-        // console.log(data)
-
-        console.log(added)
-        // let temp_name = "bicep curl"
-        // console.log(temp_name)
-        // if (added.includes(temp_name)) {
-        //     results.push(temp_name)
-        // }
-
-        for (let i = 0; i < data.length; i++){
-            let exercise = data[i];
-            console.log(exercise.name)
-            console.log(!added.includes(exercise.name))
-            if (!added.includes(exercise.name)){
-                results.push(exercise)
+            // for (let i = 0; i < data.length; i++){
+            //     let exercise = data[i];
+            //     if (!added.includes(exercise.name)){
+            //         results.push(exercise)
+            //         toCompare.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
+            //     }
+            //     if (results.length === 10) break;
+            // }
+            // if (results.length === 10) break;
             }
-            if (results.length === 10) break;
-        }
-        if (results.length === 10) break;
 
-        //////////////
-
-        // results.push(data)
-        // if (results.length === 10) break;
-    }
+        console.log(`results:`)
         console.log(results)
-        console.log(`results: ${results}`)
-    
+        console.log(toCompare)
     }
+
+    function compare(){
+        let list = [
+            { id: '1000001', content: 'Why studying javascript is fun?' },
+            { id: '1000002', content: 'The trend for javascript in machine learning' },
+            { id: '1000003', content: 'The most insightful stories about JavaScript' },
+            { id: '1000004', content: 'Introduction to Machine Learning' },
+            { id: '1000005', content: 'Machine learning and its application' },
+            { id: '1000006', content: 'Python vs Javascript, which is better?' },
+            { id: '1000007', content: 'How Python saved my life?' },
+            { id: '1000008', content: 'The future of Bitcoin technology' },
+            { id: '1000009', content: 'Is it possible to use javascript for machine learning?' }
+          ];
+
+        //   console.log(recommender)
+        // recommender.train(list);
+
+        console.log(list[0].content)
+        console.log("rec")
+    }
+
+    // useEffect(() => {
+    //     compare()
+    //   },[])
 
 
     return (

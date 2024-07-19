@@ -24,6 +24,11 @@ function WorkoutButton(props){
                 },
                 body: JSON.stringify({
                     name: props.exName,
+                    type: props.type,
+                    muscle: props.muscle,
+                    equipment: props.equipment,
+                    difficulty: props.difficulty,
+                    instructions: props.instructions,
                     workoutID: parseInt(props.id)
                 }),
                 }

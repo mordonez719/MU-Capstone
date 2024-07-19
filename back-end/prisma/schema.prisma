@@ -18,6 +18,7 @@ model User {
   hashedPassword String
   workouts Workout[]
   plans Plan[]
+  recentAdds Exercise[]
   sent User[] @relation("UserRequests")
   received User[] @relation("UserRequests")
   friends User[] @relation("friends")
@@ -46,8 +47,15 @@ model Workout {
 model Exercise {
   id Int @id @default(autoincrement())
   name String
+  type String
+  muscle String
+  equipment String
+  difficulty String
+  instructions String
   workoutID Int
   workouts Workout @relation(fields: [workoutID], references: [id])
+  userID String?
+  user User? @relation(fields: [userID], references: [user])
 }
 
 model Plan {
