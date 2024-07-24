@@ -14,22 +14,27 @@ import './Recommendations.css'
 import { useState, useEffect } from 'react'
 
 function Recommendations(props) {
-    // const recommender = new Sample({
-    //     minScore: 0.1,
-    //     maxSimilarDocuments: 100
-    //   });
-
     const [history, setHistory] = useState([])
+    
+    const [lastHistory, setLastHistory] = useState(null)
+
     const [exTypes, setExTypes] = useState([])
     const [muscles, setMuscles] = useState([])
     const [difficulties, setDiffs] = useState([])
     const [added, setAdded] = useState([])
+    const [recents, setRecents] = useState([])
 
     const user = props.user
     let topWords = []
     let searches = []
     const results = [];
     const toCompare = [];
+
+    // let results = ["first exercise", "second one", "and three"]
+    // let toCompare = ["first exercise", "second one", "and three"]
+
+
+    let topSimilarities = [];
 
     // get search history
     const fetchHistory = async () => {
@@ -58,16 +63,28 @@ function Recommendations(props) {
         })
         const data = await response.json()
         setAdded(data);
-        // console.log(!added.includes("fake"))
+    };
+
+    // get exercises recently added by user
+    const fetchRecents = async () => {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/recent/exercises`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const data = await response.json()
+        setRecents(data);
     };
 
     useEffect(() => {
         fetchHistory();
-        fetchAdded()
-      },[])
+      },[props.searchChange])
 
     useEffect(() => {
-        if (history) {
+        fetchAdded().then(() => {
+            fetchRecents().then(() => {
             fetchWords().then(() => {
                 const sortedWords = reduceSort(topWords)
                 const sortedTypes = reduceSort(exTypes)
@@ -76,10 +93,16 @@ function Recommendations(props) {
                 listSearches(sortedWords, sortedMuscles, sortedTypes, sortedDiffs) // generate searches with sorted user data
                 fetchData(searches).then(() => {
                     compare();
+                    makeRecs();
                 })
             })
-        }
+        })
+        })
     }, [history])
+
+
+
+
 
     // call top words api to find related words to recent queries
     const fetchWords = async () => {
@@ -108,23 +131,21 @@ function Recommendations(props) {
     }
 
     // generates a list of searches the user might like; fields in order of importance: queries, muscle groups, type, difficulty
-    function listSearches(topQueries, topMuscles, topTypes, topDifficulties){
-       
-       
-        // for (let i = 0; i < topQueries.length; i++) {
-        //     let search_map = {}
-        //     search_map["query"] = topQueries[i];
-        //     search_map["muscle"] = "Any";
-        //     search_map["type"] = "Any";
-        //     search_map["difficulty"] = "Any";
-        //     searches.push(search_map) // add a no-filter search for related queries
-        // }
+    function listSearches(topQueries, topMuscles, topTypes, topDifficulties){       
+        for (let i = 0; i < topQueries.length; i++) {
+            let search_map = {}
+            search_map["query"] = topQueries[i];
+            search_map["muscle"] = "Any";
+            search_map["type"] = "Any";
+            search_map["difficulty"] = "Any";
+            searches.push(search_map) // add a no-filter search for related queries
+        }
 
 
         for (let i = 0; i < topMuscles.length; i++) { // iterate through sorted filters in order of category weight and generate searches
             for (let j = 0; j < topTypes.length; j++) {
                 for (let k = 0; k < topDifficulties.length; k++) {
-                    if (searches.length >= 0) { // stop if 10 searches have been generated
+                    if (searches.length >= 10) { // stop if 10 searches have been generated
                         break;
                     }
                     if (topMuscles[i] === "Any" && topTypes[j] === "Any" && topDifficulties[k] === "Any"){
@@ -139,6 +160,8 @@ function Recommendations(props) {
                 }
             }
         }
+        // console.log(searches)
+
         let search_map = {}
         search_map["query"] = "";
         search_map["muscle"] = "Any";
@@ -148,11 +171,13 @@ function Recommendations(props) {
     }
 
     const fetchData = async (searches) => {
-        console.log("top")
+        console.log(searches)
+        // console.log("top")
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s";
         
         for (let i = 0; i < searches.length; i++){
             let search = searches[i]
+            // console.log(search)
         
             // if a user selected an option, populate a filter string
             let nameQuery = ""
@@ -183,48 +208,115 @@ function Recommendations(props) {
             };
 
             // const response = await fetch(apiURL, options); ///////////////////////////
-            // const data = await response.json();
+            const data = await response.json();
 
-            // for (let i = 0; i < data.length; i++){
-            //     let exercise = data[i];
-            //     if (!added.includes(exercise.name)){
-            //         results.push(exercise)
-            //         toCompare.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
-            //     }
-            //     if (results.length === 10) break;
-            // }
-            // if (results.length === 10) break;
+            for (let i = 0; i < data.length; i++){
+                let exercise = data[i];
+                if (!added.includes(exercise.name)){
+                    results.push(exercise)
+                    toCompare.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
+                }
+                if (results.length === 10) break;
             }
+            if (results.length === 10) break;
 
-        console.log(`results:`)
-        console.log(results)
-        console.log(toCompare)
+
+            }
     }
 
     function compare(){
-        let list = [
-            { id: '1000001', content: 'Why studying javascript is fun?' },
-            { id: '1000002', content: 'The trend for javascript in machine learning' },
-            { id: '1000003', content: 'The most insightful stories about JavaScript' },
-            { id: '1000004', content: 'Introduction to Machine Learning' },
-            { id: '1000005', content: 'Machine learning and its application' },
-            { id: '1000006', content: 'Python vs Javascript, which is better?' },
-            { id: '1000007', content: 'How Python saved my life?' },
-            { id: '1000008', content: 'The future of Bitcoin technology' },
-            { id: '1000009', content: 'Is it possible to use javascript for machine learning?' }
-          ];
+        let similarMap = {} // keeps similarity score mapped to exercise index
+        let list = [];
 
-        //   console.log(recommender)
-        // recommender.train(list);
+        for (let i = 0; i < recents.length; i++){
+            let exercise = recents[i];
+            list.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
+        }
 
-        console.log(list[0].content)
-        console.log("rec")
+        console.log(list)
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < toCompare.length; j++){
+                var perc=Math.round(similarity(list[i],toCompare[j])*1000000)/10000;
+                if (similarMap[perc]){
+                    similarMap[perc].push(j)
+                } else {
+                    similarMap[perc] = [j]
+                }
+            }
+        }
+
+        const keys = Object.keys(similarMap);
+        const sortedKeys = keys.sort((a, b) => parseFloat(b) - parseFloat(a));
+        for (let i = 0; i < sortedKeys.length; i++){
+            let percentage = sortedKeys[i]
+            for (let j = 0; j < similarMap[percentage].length; j++){
+                let exercise_index = similarMap[percentage][j];
+                if (!topSimilarities.includes(exercise_index)){
+                    topSimilarities.push(exercise_index)
+                    }
+                if (topSimilarities.length === 5) break;
+                }
+            if (topSimilarities.length === 5) break;
+        }
+
+        if (topSimilarities.length === 0){
+            topSimilarities = [1, 2, 3, 4, 5]
+        }
     }
 
-    // useEffect(() => {
-    //     compare()
-    //   },[])
+    // code taken from codepad.co -- https://codepad.co/snippet/javascript-calculating-similarity-between-two-strings
+    function similarity(s1, s2) {
+        var longer = s1;
+        var shorter = s2;
+        if (s1.length < s2.length) {
+          longer = s2;
+          shorter = s1;
+        }
+        var longerLength = longer.length;
+        if (longerLength === 0) {
+          return 1.0;
+        }
+        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    }
+      
+    // code taken from codepad.co -- https://codepad.co/snippet/javascript-calculating-similarity-between-two-strings
+    function editDistance(s1, s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+      
+        var costs = new Array();
+        for (var i = 0; i <= s1.length; i++) {
+          var lastValue = i;
+          for (var j = 0; j <= s2.length; j++) {
+            if (i == 0)
+              costs[j] = j;
+            else {
+              if (j > 0) {
+                var newValue = costs[j - 1];
+                if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                  newValue = Math.min(Math.min(newValue, lastValue),
+                    costs[j]) + 1;
+                costs[j - 1] = lastValue;
+                lastValue = newValue;
+              }
+            }
+          }
+          if (i > 0)
+            costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
 
+    function makeRecs(){
+        let recs = [];
+        for (let i = 0; i < topSimilarities.length; i++){
+            let exercise_index = topSimilarities[i];
+            let exercise = results[exercise_index];
+            recs.push(exercise)
+        }
+        console.log(recs)
+    }
 
     return (
         <>

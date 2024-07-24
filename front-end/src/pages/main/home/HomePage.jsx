@@ -58,7 +58,7 @@ function HomePage(props) {
             <div className="home-menu">
                 <h3 className='home-header'>Recommended For You: </h3>
             </div>
-            <Recommendations user={props.user}/>
+            <Recommendations user={props.user} searchChange={props.searchChange}/>
             <br></br>
             <div className="home-menu">
                 <h3 className='home-header'>Your Workouts: </h3>

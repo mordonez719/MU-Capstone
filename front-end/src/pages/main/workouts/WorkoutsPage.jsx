@@ -16,7 +16,7 @@ function WorkoutsPage(props){
     return (
         <div id="wk-container">
         <h2>Create Workouts Here</h2>
-        <ExerciseResults user={props.user}/>
+        <ExerciseResults user={props.user} setSearchChange={props.setSearchChange} searchChange={props.searchChange}/>
         </div>
     )
 }

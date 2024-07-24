@@ -22,6 +22,7 @@ import FriendsPage from './friends/FriendsPage.jsx'
 
 function MainPage(props){
     const [tabState, setTab] = useState(0);
+    const [searchChange, setSearchChange] = useState(false); // to trigger an update for fetching history when a new exercise search is made
     
     // sets active tab based on what the user clicks
     const toggleTab = (page) => {
@@ -53,10 +54,10 @@ function MainPage(props){
         </header>
         <main id="all-content"> {/* alters display--visible or not--depending on if the page is active */}
             <div className={tabState === 0 ? "content active-content" : "content"}>
-                <HomePage user={props.user}/>
+                <HomePage user={props.user} searchChange={searchChange}/>
             </div>
             <div className={tabState === 1 ? "content active-content" : "content"}>
-                <WorkoutsPage user={props.user}/>
+                <WorkoutsPage user={props.user} searchChange={searchChange} setSearchChange={setSearchChange}/>
             </div>
             <div className={tabState === 2 ? "content active-content" : "content"}>
                 <MealsPage user={props.user}/>

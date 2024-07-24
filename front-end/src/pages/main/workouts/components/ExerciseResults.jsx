@@ -18,6 +18,9 @@ import { useState } from 'react'
 import SearchExercises from './SearchExercises';
 
 function ExerciseResults(props){
+    const setSearchChange = props.setSearchChange;
+    const searchChange = props.searchChange
+
     const [apiData, fillData] = useState([]);
 
     // initializes filters for searching
@@ -97,6 +100,7 @@ function ExerciseResults(props){
     const handleSearch = () => {
         fetchData(searchQuery, muscleGroup, exType, difficulty); // fetches exercises based of query and filters
         updateHistory(searchQuery, exType, muscleGroup, difficulty); // adds search query and filters to user's history
+        setSearchChange(!searchChange)
     }
 
     let exercises = []
