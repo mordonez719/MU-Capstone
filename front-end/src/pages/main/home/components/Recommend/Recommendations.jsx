@@ -5,38 +5,36 @@ Recommendations.jsx
 Generates and displays exercise recommendations based on
 collected user data.
 
-Calls:
+Calls: ExerciseCard
 Called In: HomePage
 
 */
 
 import './Recommendations.css'
 import { useState, useEffect } from 'react'
+import ExerciseCard from '../../../workouts/components/ExerciseCard'
 
 function Recommendations(props) {
-    const [history, setHistory] = useState([])
+    const [history, setHistory] = useState([]) // queries
     
-    const [lastHistory, setLastHistory] = useState(null)
+    const [cards, setCards] = useState([]) // recommendation displays
 
-    const [exTypes, setExTypes] = useState([])
+    const [exTypes, setExTypes] = useState([]) // filter histories
     const [muscles, setMuscles] = useState([])
     const [difficulties, setDiffs] = useState([])
-    const [added, setAdded] = useState([])
-    const [recents, setRecents] = useState([])
+    
+    const [added, setAdded] = useState([]) // names of previously added exercises
+    const [recents, setRecents] = useState([]) // recently added exercises
 
     const user = props.user
     let topWords = []
     let searches = []
     const results = [];
     const toCompare = [];
-
-    // let results = ["first exercise", "second one", "and three"]
-    // let toCompare = ["first exercise", "second one", "and three"]
-
-
+    let new_cards = []
     let topSimilarities = [];
 
-    // get search history
+    // get search history, queries and filters
     const fetchHistory = async () => {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/user/data`,
         {
@@ -78,22 +76,24 @@ function Recommendations(props) {
         setRecents(data);
     };
 
-    useEffect(() => {
+    useEffect(() => { // fetch the search history when the user makes a new search
         fetchHistory();
       },[props.searchChange])
 
-    useEffect(() => {
+    useEffect(() => { // generates and displays recommendations when the search history changes
         fetchAdded().then(() => {
             fetchRecents().then(() => {
             fetchWords().then(() => {
-                const sortedWords = reduceSort(topWords)
+                const sortedWords = reduceSort(topWords) // sorts unique words in the array by frequency
                 const sortedTypes = reduceSort(exTypes)
                 const sortedMuscles = reduceSort(muscles);
                 const sortedDiffs = reduceSort(difficulties);
                 listSearches(sortedWords, sortedMuscles, sortedTypes, sortedDiffs) // generate searches with sorted user data
-                fetchData(searches).then(() => {
-                    compare();
-                    makeRecs();
+                fetchData(searches).then(() => { // get possible recs
+                    compare(); // compare to recently added
+                    makeRecs(); // get best exercises
+                    makeCards(recs); // make displays
+                    setCards(new_cards); // set final recs
                 })
             })
         })
@@ -106,7 +106,7 @@ function Recommendations(props) {
 
     // call top words api to find related words to recent queries
     const fetchWords = async () => {
-        for (let index in history){
+        for (let index in history){ // for each query in the history, get the top related word
             if (history[index]) {
                 const baseURL = `https://api.datamuse.com/words?ml=${history[index]}&topics=workout,exercise,muscle`  
                 const response = await fetch(baseURL);
@@ -138,9 +138,8 @@ function Recommendations(props) {
             search_map["muscle"] = "Any";
             search_map["type"] = "Any";
             search_map["difficulty"] = "Any";
-            searches.push(search_map) // add a no-filter search for related queries
+            searches.push(search_map) // add a no-filter search for each related query
         }
-
 
         for (let i = 0; i < topMuscles.length; i++) { // iterate through sorted filters in order of category weight and generate searches
             for (let j = 0; j < topTypes.length; j++) {
@@ -160,7 +159,6 @@ function Recommendations(props) {
                 }
             }
         }
-        // console.log(searches)
 
         let search_map = {}
         search_map["query"] = "";
@@ -170,16 +168,14 @@ function Recommendations(props) {
         searches.push(search_map) // adds a beginner search, will recommend beginner exercises if no results were found from the user's data or if the user is new
     }
 
+    // use generated searches to fetch list of potential recommendations
     const fetchData = async (searches) => {
-        console.log(searches)
-        // console.log("top")
         const API_KEY = "blh/YcO1GAxLzjv/r35Y9g==0W271Io3ZcFagH9s";
         
         for (let i = 0; i < searches.length; i++){
             let search = searches[i]
-            // console.log(search)
         
-            // if a user selected an option, populate a filter string
+            // if the filter is not "Any", populate a filter string
             let nameQuery = ""
             if (search.query){
                 nameQuery = `&name=${search.query}`}
@@ -212,34 +208,31 @@ function Recommendations(props) {
 
             for (let i = 0; i < data.length; i++){
                 let exercise = data[i];
-                if (!added.includes(exercise.name)){
+                if (!added.includes(exercise.name)){ // if the user has not already added the returned exercise, add to results
                     results.push(exercise)
-                    toCompare.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
+                    toCompare.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`) // turn the exercise into a string and push to different list
                 }
-                if (results.length === 10) break;
+                if (results.length === 10) break; // stop adding when the rec list reaches 10
             }
-            if (results.length === 10) break;
-
-
+            if (results.length === 10) break; // stop when rec list reaches 10
             }
     }
 
+    // compare fetched possible recommendations to a user's recently added exercises to find the best matches
     function compare(){
         let similarMap = {} // keeps similarity score mapped to exercise index
         let list = [];
 
-        for (let i = 0; i < recents.length; i++){
+        for (let i = 0; i < recents.length; i++){ // turns recently added exercises to a string for comparing
             let exercise = recents[i];
             list.push(`${exercise.name}, ${exercise.type}, ${exercise.muscle}, ${exercise.equipment}, ${exercise.difficulty}`)
         }
 
-        console.log(list)
-
-        for (let i = 0; i < list.length; i++) {
+        for (let i = 0; i < list.length; i++) { // find the percentage similarity between the recently added and the recommendation results
             for (let j = 0; j < toCompare.length; j++){
-                var perc=Math.round(similarity(list[i],toCompare[j])*1000000)/10000;
+                var perc=Math.round(similarity(list[i],toCompare[j])*1000000)/10000; // get %
                 if (similarMap[perc]){
-                    similarMap[perc].push(j)
+                    similarMap[perc].push(j) // map % keys to an array of indicies of exercises with that % similarity
                 } else {
                     similarMap[perc] = [j]
                 }
@@ -247,21 +240,21 @@ function Recommendations(props) {
         }
 
         const keys = Object.keys(similarMap);
-        const sortedKeys = keys.sort((a, b) => parseFloat(b) - parseFloat(a));
+        const sortedKeys = keys.sort((a, b) => parseFloat(b) - parseFloat(a)); // sort the map to be from highest to lowest key values (%)
         for (let i = 0; i < sortedKeys.length; i++){
             let percentage = sortedKeys[i]
-            for (let j = 0; j < similarMap[percentage].length; j++){
+            for (let j = 0; j < similarMap[percentage].length; j++){ // iterate through the array of indices in each map value
                 let exercise_index = similarMap[percentage][j];
-                if (!topSimilarities.includes(exercise_index)){
+                if (!topSimilarities.includes(exercise_index)){ // if the exercise index is not already included, add it to a list of most similar indicies
                     topSimilarities.push(exercise_index)
                     }
-                if (topSimilarities.length === 5) break;
+                if (topSimilarities.length === 5) break; // stop when we have the 5 most similar
                 }
             if (topSimilarities.length === 5) break;
         }
 
-        if (topSimilarities.length === 0){
-            topSimilarities = [1, 2, 3, 4, 5]
+        if (topSimilarities.length === 0){ // if there were not enough results (user has no recently added), set most similar to first five returned from the api
+            topSimilarities = [0, 1, 2, 3, 4]
         }
     }
 
@@ -308,19 +301,31 @@ function Recommendations(props) {
         return costs[s2.length];
     }
 
-    function makeRecs(){
-        let recs = [];
+    let recs = [];
+
+    function makeRecs(){ // for each index in topSimilarites, add the matching exercise to the list of recommendations
         for (let i = 0; i < topSimilarities.length; i++){
             let exercise_index = topSimilarities[i];
             let exercise = results[exercise_index];
             recs.push(exercise)
         }
-        console.log(recs)
+    }
+
+    function makeCards(recs){ // make a display card for each recommendation in the list
+        for (let i = 0; i < recs.length; i++){
+            let exercise = recs[i];
+            if (exercise){
+                new_cards.push(<ExerciseCard id={i} classNamer="rec" name={exercise.name} exercise={exercise} user={props.user} 
+                type={exercise.type} muscle={exercise.muscle} equipment={exercise.equipment} difficulty={exercise.difficulty} instructions={exercise.instructions}/>
+            );
+            };
+        };
     }
 
     return (
         <>
-        <div id="recommendation-container"> Recommendations Here
+        <div id="recommendation-container">
+            {cards}
         </div>
         </>
     )

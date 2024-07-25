@@ -54,7 +54,7 @@ function WorkoutDropdown(props){
 
 
     return (
-        <section className='dropdown'>
+        <section className={props.classNamer ? props.classNamer :'dropdown'}>
             <button className="add-to-wk" onClick={handleClick}>Add</button>
                 {drop ? 
                 <section className='dropdown-buttons'>
