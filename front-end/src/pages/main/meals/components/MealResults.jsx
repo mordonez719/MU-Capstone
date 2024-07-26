@@ -14,6 +14,7 @@ Called In: MealsPage, SearchMeals
 import './MealResults.css'
 import MealCard from './MealCard'
 import SearchMeals from './SearchMeals'
+import Loading from '../../../../Loading'
 import { useState } from 'react'
 
 function MealResults(props){
@@ -119,7 +120,12 @@ function MealResults(props){
                 maxCal={maxCal} setMaxCal={setMaxCal}
                 />
             </div>
-            {loading ? (<><p>Loading...</p></>) : ( meals )}
+            {loading ? 
+            (<>
+            <p>Loading...</p>
+            <Loading /> 
+            </>) 
+            : ( meals )}
         </section>
     )
 }
