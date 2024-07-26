@@ -11,6 +11,7 @@
 .add-to-plan{
     border-radius: 0%;
     width: fit-content;
+    cursor: cell;
 }
 
 .dropdown-buttons{

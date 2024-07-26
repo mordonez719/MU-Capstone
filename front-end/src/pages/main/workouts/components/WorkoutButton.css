@@ -4,6 +4,7 @@
     background-color: rgb(233, 233, 233);
     width: 100%;
     transition: background-color 0.25s;
+    cursor: cell;
 }
 
 .wk-button:hover{
