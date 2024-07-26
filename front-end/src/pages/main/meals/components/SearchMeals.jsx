@@ -25,9 +25,9 @@ function SearchMeals(props) {
     let setOptionsMap = props.setOptionsMap
 
     // initializes options for users to chose from
-    const diets = ["balanced", "high-fiber", "high-protein"]
-    const healths = ["alcohol-free", "vegetarian", "vegan"]
-    const dishes = ["Main course", "Side dish", "Desserts"]
+    const diets = ["Balanced", "High-Fiber", "High-Protein"]
+    const healths = ["Alcohol-Free", "Vegetarian", "Vegan"]
+    const dishes = ["main course", "side dish", "desserts"]
 
     // initializes useState to re-render checkboxes on update
     const [updated, setUpdated] = useState(false)
