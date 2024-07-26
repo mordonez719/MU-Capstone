@@ -47,11 +47,15 @@ function MealResults(props){
         const data = await response.json();
 
         function applyFilter(meal) { // returns true if a recipe adheres to the given filter
+            console.log(meal)
+            console.log(filters)
             for (var index in filters) { // iterates through categories, ex. dish type, diet, health
                 var category = index;
                 let filter_list = filters[category]
                 for (var filter_index in filter_list){ // iterates thorugh specific filters in each category
                     let filter = filter_list[filter_index]
+                    console.log(meal.recipe[category])
+                    console.log(meal.recipe[category].includes(filter))
                     if ((meal.recipe[category] && !meal.recipe[category].includes(filter)) || !meal.recipe[category]){ // return false if the filter does not apply
                         return false;
                     }
@@ -60,7 +64,7 @@ function MealResults(props){
             if (meal.recipe.calories < minCal || meal.recipe.calories > maxCal){ // check that the meal is within the given calorie range
                 return false;
             }
-
+            console.log("passed")
             return true; // return true if the meal has the wanted characteristics and is within the calorie range
         }
 
@@ -86,7 +90,7 @@ function MealResults(props){
                 if (filterMap[mapKey][0] === "diet") {
                     applying["dietLabels"].push(mapKey)
                 }
-                if (filterMap[mapKey][0] === "healthLabels") {
+                if (filterMap[mapKey][0] === "health") {
                     applying["healthLabels"].push(mapKey)
                 }
                 if (filterMap[mapKey][0] === "dishType") {
