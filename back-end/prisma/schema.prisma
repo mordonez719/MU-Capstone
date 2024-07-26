@@ -23,16 +23,10 @@ model User {
   received User[] @relation("UserRequests")
   friends User[] @relation("friends")
   friendOf User[] @relation("friends")
-  exSearches String[]
-  mealSearches String[]
-  exTypes String[]
-  muscles String[]
-  difficulties String[]
-  diets String[]
-  healths String[]
-  dishTypes String[]
-  caloricMin Int[]
-  caloricMax Int[]
+  exSearches String[] @default([])
+  exTypes String[] @default([])
+  muscles String[] @default([])
+  difficulties String[] @default([])
 }
 
 model Workout {
