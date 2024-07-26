@@ -6,7 +6,7 @@ Fetches and displays up to 10 meals from the API that
 match the user's query. Implements a loading state while data
 is being fetched.
 
-Calls: MealCard, SearchMeals
+Calls: MealCard, SearchMeals, Loading
 Called In: MealsPage, SearchMeals
 
 */

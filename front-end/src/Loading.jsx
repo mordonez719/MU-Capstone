@@ -5,7 +5,7 @@ Loading.jsx
 Creates an animated loading spinner.
 
 Calls: 
-Called In: MealResults
+Called In: MealResults, ExerciseResults
 
 */
 
