@@ -114,7 +114,7 @@ function WorkoutModal(props){
             <section id="wk-modal-container">
                 <h3 id="modal-title">{workout.title}</h3>
                 <p id="modal-desc">{workout.description}</p>
-                {props.add ? <button onClick={handleCopy}>Create a Copy</button> : ""}
+                {props.add ? <button onClick={handleCopy} className="copy-button">Create a Copy</button> : ""}
                 <button id="close-form" onClick={() => props.toggleModal(0)}>X</button>
                 <h4 className="ex-header">Exercises:</h4>
                 <section className="ex-container">
