@@ -101,9 +101,6 @@ function Recommendations(props) {
     }, [history])
 
 
-
-
-
     // call top words api to find related words to recent queries
     const fetchWords = async () => {
         for (let index in history){ // for each query in the history, get the top related word
@@ -203,7 +200,7 @@ function Recommendations(props) {
                 },
             };
 
-            // const response = await fetch(apiURL, options);
+            const response = await fetch(apiURL, options);
             const data = await response.json();
 
             for (let i = 0; i < data.length; i++){
@@ -304,22 +301,26 @@ function Recommendations(props) {
     let recs = [];
 
     function makeRecs(){ // for each index in topSimilarites, add the matching exercise to the list of recommendations
+        let temp = [];
         for (let i = 0; i < topSimilarities.length; i++){
             let exercise_index = topSimilarities[i];
             let exercise = results[exercise_index];
-            recs.push(exercise)
+            temp.push(exercise)
         }
+        recs = temp;
     }
 
     function makeCards(recs){ // make a display card for each recommendation in the list
+        let temp = [];
         for (let i = 0; i < recs.length; i++){
             let exercise = recs[i];
             if (exercise){
-                new_cards.push(<ExerciseCard id={i} classNamer="rec" name={exercise.name} exercise={exercise} user={props.user} 
+                temp.push(<ExerciseCard id={i} classNamer="rec" name={exercise.name} exercise={exercise} user={props.user} 
                 type={exercise.type} muscle={exercise.muscle} equipment={exercise.equipment} difficulty={exercise.difficulty} instructions={exercise.instructions}/>
             );
             };
         };
+        new_cards = temp;
     }
 
     return (
