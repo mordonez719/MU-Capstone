@@ -19,6 +19,7 @@ import { useState } from 'react';
 import WorkoutsPage from './workouts/WorkoutsPage';
 import MealsPage from './meals/MealsPage';
 import FriendsPage from './friends/FriendsPage.jsx'
+// import Cursor from '../../../Cursor.jsx';
 
 function MainPage(props){
     const [tabState, setTab] = useState(0);

@@ -11,8 +11,13 @@ Called In: WorkoutDropdown
 */
 
 import './WorkoutButton.css'
+import Cursor from '../../../../../Cursor';
+import heart from './cursor_heart.png'
+import { useState } from 'react';
 
 function WorkoutButton(props){
+    const heart_icon = <img className={"heart-icon"} src={heart} />
+    const [target, setTarget] = useState(null);
 
     // adds exercise associated with the clicked button to the selected workout
     function handleAdd(){
@@ -36,7 +41,8 @@ function WorkoutButton(props){
     }
     return (
         <>
-        <button id={props.id} className='wk-button' onClick={handleAdd}>{props.name}</button>
+        {target && <Cursor offset={{ x: 3, y: -505 }}>{heart_icon}</Cursor>}
+        <button id={props.id} className='wk-button' onClick={handleAdd} onMouseEnter={() => setTarget(true)} onMouseLeave={() => setTarget(null)}>{props.name}</button>
         </>
     )
 }

@@ -10,3 +10,8 @@
 .wk-button:hover{
     background-color: #eadff5;
 }
+
+.heart-icon{
+    height: 25px;
+    width: auto;
+}
