@@ -48,7 +48,7 @@ function MainPage(props){
         <header>
             <span id="head-content">
                 <p id="profile-name">Logged in as: {props.user}</p>
-                <p id="title">Capstone</p>
+                <p id="title">HealthHub</p>
                 <p id="logout-button" onClick={handleLogOut}> Logout </p>
             </span>
         </header>

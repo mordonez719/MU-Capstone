@@ -83,7 +83,7 @@ function Login(props) {
 
     return (
         <section id="login-block">
-            <h2>Capstone Project</h2>
+            <h2>HealthHub</h2>
             <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
             <p id="intro">Log in or Sign Up to get started</p>
