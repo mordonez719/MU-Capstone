@@ -15,7 +15,6 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/login/Login'
 import MainPage from './pages/main/MainPage'
-import Cursor from '../Cursor'
 
 function App() {
   const [user, setUser] = useState("")

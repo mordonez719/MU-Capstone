@@ -5,7 +5,7 @@ WorkoutButton.jsx
 Creates a button displaying the workout name.
 Adds the exercise to the workout selected.
 
-Calls:
+Calls: Cursor
 Called In: WorkoutDropdown
 
 */
@@ -17,7 +17,7 @@ import { useState } from 'react';
 
 function WorkoutButton(props){
     const heart_icon = <img className={"heart-icon"} src={heart} />
-    const [target, setTarget] = useState(null);
+    const [target, setTarget] = useState(null); // determines if the mouse is in the area to display the icon
 
     // adds exercise associated with the clicked button to the selected workout
     function handleAdd(){

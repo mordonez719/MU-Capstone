@@ -5,7 +5,7 @@ PlanButton.jsx
 Creates a button displaying the meal plan name.
 Adds the meal to the plan selected.
 
-Calls:
+Calls: Cursor
 Called In: PlanDropdown
 
 */
@@ -17,7 +17,7 @@ import { useState } from 'react';
 
 function PlanButton(props){
     const heart_icon = <img className={"heart-icon"} src={heart} />
-    const [target, setTarget] = useState(null);
+    const [target, setTarget] = useState(null); // determines if the mouse is in the area to display the icon
 
     // adds meal associated with the clicked button to the selected plan
     function handleAdd(){
