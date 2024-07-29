@@ -54,18 +54,21 @@ function Signup(props) {
     }
 
     return (
+        <div id="signup-screen">
         <section id="login-block">
             <h2 className='login-title'>HealthHub</h2>
             <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
-            <p id="intro">Sign Up to get started</p>
-            <div>
-                <input className="login-input" onChange={handleChangeUser} value={user} placeholder='Username...'></input>
+            <p id="intro">Sign Up to Get Started!</p>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input className="login-input" name="username" onChange={handleChangeUser} value={user}></input>
             </div>
-            <div>
-                <input className="login-input" type="password" onChange={handleChangePassword} value={password} placeholder='Password...'></input>
+            <div class="input-group"> 
+                <label for="password">Password</label>
+                <input className="login-input" name="password" type="password" onChange={handleChangePassword} value={password}></input>
             </div>
-            <p onClick={props.handleTypeChange}>Already have an account?</p>
+            <p className="change-type" onClick={props.handleTypeChange}>Already have an account?</p>
             <span>
                 <button className="login-button" onClick={handleSignUp}>Sign Up</button>
             </span>
@@ -73,6 +76,7 @@ function Signup(props) {
                 {result && <p>{result}</p>}
             </div>
         </section>
+        </div>
     )
 }
 

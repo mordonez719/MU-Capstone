@@ -60,25 +60,29 @@ function Login(props) {
     }
 
     return (!signup) ? (
+        <div id="login-screen">
         <section id="login-block">
             <h2 className='login-title'>HealthHub</h2>
             <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
-            <p id="intro">Log in to get started</p>
-            <div>
-                <input className="login-input" onChange={handleChangeUser} value={user} placeholder='Username...'></input>
+            <p id="intro">Welcome Back!</p>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input className="login-input" name="username" onChange={handleChangeUser} value={user}></input>
             </div>
-            <div>
-                <input className="login-input" type="password" onChange={handleChangePassword} value={password} placeholder='Password...'></input>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input className="login-input" name="password" type="password" onChange={handleChangePassword} value={password}></input>
             </div>
-            <p onClick={handleTypeChange}>Create a new account</p>
+            <p className="change-type" onClick={handleTypeChange}>Create a new account</p>
             <span>
                 <button className="login-button" onClick={handleLogIn}>Log In</button>
             </span>
             <div>
                 {result && <p>{result}</p>}
             </div>
-        </section>)
+        </section>
+        </div>)
         : <Signup user={props.user} setUser={props.setUser} handleTypeChange={handleTypeChange}/>
 }
 
