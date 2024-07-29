@@ -43,7 +43,7 @@ useEffect(() => {
       <main>
         <Routes>
           {/* displays login or main page depending on user */}
-          <Route path="/" element={user ? <MainPage user={user} setUser={setUser}/> : <Login setUser={setUser}/>} />
+          <Route path="/" element={user ? <MainPage user={user} setUser={setUser}/> : <Login user={user} setUser={setUser}/>} />
         </Routes>
       </main>
     </div>

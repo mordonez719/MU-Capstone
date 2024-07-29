@@ -11,23 +11,14 @@
     width: fit-content;
     margin: 2%;
     margin-top: 7%;
-    font-size: 8px;
+    font-size: 10px;
+    width: 50%;
 }
 
 .login-input{
     margin-top: 3%;
-    width: 80%;
-    height: 25px;
-    border-radius: 10px;
-    border-color: darkslateblue;
-    background-color: rgba(255, 255, 255, 0.83);
 }
 
 #person-icon{
     font-size: 100px;
-}
-
-.login-title{
-    font-size: 30px;
-    font-family: Bangla MN;
 }

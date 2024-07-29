@@ -1,28 +1,22 @@
 /*
 
-Login.jsx
+Signup.jsx
 
-Displayes login form. Stores username in state variable.
-searches for given username and tests if given password matches.
+Displayes signup form. Stores username in state variable.
+Creates a new user in the databse. Hashes password and stores username and password.
 
-Calls: Signup
-Called In: App
+Calls: 
+Called In: Login
 
 */
 
-import './Login.css'
-import Signup from './Signup'
+import './Signup.css'
 import { useState } from 'react'
 
-function Login(props) {
+function Signup(props) {
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
     const [result, setResult] = useState("")
-    const [signup, setSignup] = useState(false)
-
-    const handleTypeChange = (e) => {
-        setSignup(!signup)
-    }
 
     const handleChangeUser = (e) => {
         setUser(e.target.value);
@@ -32,9 +26,9 @@ function Login(props) {
         setPassword(e.target.value)
     }
 
-    // find username, tests if password matches encrypted password that was stored
-    const handleLogIn = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
+    // encrypts password and adds the username, password pair to the database
+    const handleSignUp = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
         {
             method: "POST",
             headers: {
@@ -47,39 +41,39 @@ function Login(props) {
         })
         .then(response => {
             if (response.ok) {
-                setResult("log in success!");
-                props.setUser(user); // sets user on login
+                setResult("sign up success!");
+                props.setUser(user); // sets user on account creation
             }
             else{
-                setResult("failed to find matching account")
+                setResult("failed to create an account")
             }
         })
         .catch(error => {
-            setResult("failed to find matching account")
+            setResult("failed to create an account")
         });
     }
 
-    return (!signup) ? (
+    return (
         <section id="login-block">
             <h2 className='login-title'>HealthHub</h2>
             <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
-            <p id="intro">Log in to get started</p>
+            <p id="intro">Sign Up to get started</p>
             <div>
                 <input className="login-input" onChange={handleChangeUser} value={user} placeholder='Username...'></input>
             </div>
             <div>
                 <input className="login-input" type="password" onChange={handleChangePassword} value={password} placeholder='Password...'></input>
             </div>
-            <p onClick={handleTypeChange}>Create a new account</p>
+            <p onClick={props.handleTypeChange}>Already have an account?</p>
             <span>
-                <button className="login-button" onClick={handleLogIn}>Log In</button>
+                <button className="login-button" onClick={handleSignUp}>Sign Up</button>
             </span>
             <div>
                 {result && <p>{result}</p>}
             </div>
-        </section>)
-        : <Signup user={props.user} setUser={props.setUser} handleTypeChange={handleTypeChange}/>
+        </section>
+    )
 }
 
-export default Login
+export default Signup
