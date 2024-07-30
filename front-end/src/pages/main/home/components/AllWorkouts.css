@@ -1,7 +1,13 @@
 #all-workouts {
-    outline: 2px dashed #ddcfff;
-    width: 95%;
-    height: 25%;
-    align-self: center;
-    display: flex;
+  outline: 2px dashed #ddcfff;
+  width: 95%;
+  display: flex;
+  align-self: center;
+  padding-top: 135px;
+  padding-bottom: 135px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  flex-direction: row;
+  align-items: center;
+  height: auto;
 }
