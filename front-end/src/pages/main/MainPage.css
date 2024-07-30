@@ -33,7 +33,7 @@ header {
 
 #title {
     font-size: x-large;
-    font-family: copperplate;
+    font-family: Bangla MN;
 }
 
 .tab {
@@ -57,7 +57,25 @@ header {
 }
 
 .active-content{
-    display: block;
+    display: flex;
     height: 100%;
     width: 100%;
+}
+
+#head-name{
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#head-title{
+    width: 33%;
+}
+
+#head-logout{
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

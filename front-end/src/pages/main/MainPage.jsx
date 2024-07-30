@@ -47,9 +47,15 @@ function MainPage(props){
         <div id="main">
         <header>
             <span id="head-content">
-                <p id="profile-name">Logged in as: {props.user}</p>
-                <p id="title">HealthHub</p>
-                <p id="logout-button" onClick={handleLogOut}> Logout </p>
+                <span id="head-name">
+                    <p id="profile-name">Logged in as: {props.user}</p>
+                </span>
+                <span id="head-title">
+                    <p id="title">HealthHub</p>
+                </span>
+                <span id="head-logout">
+                    <p id="logout-button" onClick={handleLogOut}> Logout </p>
+                </span>
             </span>
         </header>
         <main id="all-content"> {/* alters display--visible or not--depending on if the page is active */}

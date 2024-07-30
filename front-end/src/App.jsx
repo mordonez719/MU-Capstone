@@ -40,7 +40,7 @@ useEffect(() => {
     <>
     <BrowserRouter>
     <div id="main-content-holder">
-      <main>
+      <main id="login-or-main">
         <Routes>
           {/* displays login or main page depending on user */}
           <Route path="/" element={user ? <MainPage user={user} setUser={setUser}/> : <Login user={user} setUser={setUser}/>} />
