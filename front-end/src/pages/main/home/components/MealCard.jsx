@@ -17,7 +17,8 @@ function MealCard(props){
         props.setModalID(id);
         props.toggleModal(1);
     }
-
+    
+    /* Code taken from uiverse.io - https://uiverse.io/ElSombrero2/tricky-robin-67 */
     return (
         <>
             <div className="card" onClick={() => openModal(props.id)}>
