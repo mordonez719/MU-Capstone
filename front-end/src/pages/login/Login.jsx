@@ -66,11 +66,11 @@ function Login(props) {
             <span className="material-symbols-outlined" id="person-icon">person</span>
             <br></br>
             <p id="intro">Welcome Back!</p>
-            <div class="input-group">
+            <div className="input-group">
                 <label for="username">Username</label>
                 <input className="login-input" name="username" onChange={handleChangeUser} value={user}></input>
             </div>
-            <div class="input-group">
+            <div className="input-group">
                 <label for="password">Password</label>
                 <input className="login-input" name="password" type="password" onChange={handleChangePassword} value={password}></input>
             </div>
