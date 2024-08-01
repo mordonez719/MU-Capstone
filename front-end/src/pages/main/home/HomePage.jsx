@@ -54,34 +54,39 @@ function HomePage(props) {
 
     return (
         <div id="home-content">
-            <div className="home-menu">
-                <h3 className='home-header'>Recommended For You: </h3>
-            </div>
             <Recommendations user={props.user} searchChange={props.searchChange}/>
             <br></br>
-            <div className="home-menu">
-                <h3 className='home-header'>Your Workouts: </h3>
-                <button className="create" onClick={() => setForm(1)}>Create a Workout</button>
-            </div>
-            <AllWorkouts user={props.user}/>
-            <CreateWorkout user={props.user} form={form} setForm={setForm}/>
+            <section className='home-section' id="workouts-section">
+                <div className="home-menu">
+                    <h3 className='home-header'>Your Workouts: </h3>
+                    <button className="create" onClick={() => setForm(1)}>Create a Workout</button>
+                </div>
+                <AllWorkouts user={props.user}/>
+                <CreateWorkout user={props.user} form={form} setForm={setForm}/>
+            </section>
             <br></br>
-            <div className="home-menu">
-                <h3 className='home-header'>Your Meal Plans: </h3>
-                <button className="create" onClick={() => setMealForm(1)}>Create a Meal Plan</button>
-            </div>
+            <section className='home-section' id="meals-section">
+                <div className="home-menu">
+                    <h3 className='home-header'>Your Meal Plans: </h3>
+                    <button className="create" onClick={() => setMealForm(1)}>Create a Meal Plan</button>
+                </div>
             <AllMealPlans user={props.user}/>
             <CreatePlan user={props.user} form={mealForm} setForm={setMealForm}/>
+            </section>
             <br></br>
+            <section className='home-section' id="f-workouts-section">
             <div className="home-menu">
                 <h3 className='home-header'>Your Friends' Workouts: </h3>
             </div>
             <FriendsWorkouts user={props.user} friends={friendsNames}/>
+            </section>
             <br></br>
+            <section className='home-section' id="f-meals-section">
             <div className="home-menu">
                 <h3 className='home-header'>Your Friends' Meal Plans: </h3>
             </div>
             <FriendsPlans user={props.user} friends={friendsNames}/>
+            </section>
         </div>
     )
 }

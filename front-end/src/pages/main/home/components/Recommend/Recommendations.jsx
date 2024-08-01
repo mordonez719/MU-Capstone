@@ -13,6 +13,7 @@ Called In: HomePage
 import './Recommendations.css'
 import { useState, useEffect } from 'react'
 import ExerciseCard from '../../../workouts/components/ExerciseCard'
+import Carousel from './Carousel'
 
 function Recommendations(props) {
     const [history, setHistory] = useState([]) // queries
@@ -33,6 +34,13 @@ function Recommendations(props) {
     const toCompare = [];
     let new_cards = []
     let topSimilarities = [];
+    const rec_covers = [
+        "https://img.freepik.com/free-vector/fitness-gym-interior-background-room-with-sport-equipment-workouts-treadmill-bike-dumbbells-barbell-water-cooler-mat-floor_575670-1344.jpg?t=st=1722479361~exp=1722482961~hmac=2e407199de88ee465ebe48940c1070634cdd3b271c797e2bd3fbab50214fb9d7&w=2000",
+        "https://img.freepik.com/free-vector/vector-cartoon-background-gym-with-girls-doing-fitness_33099-1205.jpg?w=2000&t=st=1722479082~exp=1722479682~hmac=a3e2eba1d8c30fe94072e7463564cc63ccdf4808307c188ed6acaca1d5dcb924",  
+        "https://img.freepik.com/free-vector/cartoon-background-home-gym-with-window_1441-2776.jpg?w=2000&t=st=1722479166~exp=1722479766~hmac=b366e3d3831352b7fee5253c3f371fe83bb33aa544f6526987e8a9cd53f7ce4d",        
+        "https://img.freepik.com/free-vector/gradient-home-gym_23-2148811395.jpg?w=2000&t=st=1722479275~exp=1722479875~hmac=46a980c6dd29076553d5057942ca59447fe8a6e3bf8a77ec03f0fd2da3d559e6",
+        "https://img.freepik.com/free-vector/sport-club-gym-spacious-interior-cartoon-vector-with-various-fitness-equipment-machines-body-workout_33099-1297.jpg?t=st=1722479912~exp=1722483512~hmac=5967f704ca8131d60d15fe9e33fbf65dacf8ccde19e4840f7aef46a99a288b0b&w=2000"
+    ];
 
     // get search history, queries and filters
     const fetchHistory = async () => {
@@ -315,9 +323,18 @@ function Recommendations(props) {
         for (let i = 0; i < recs.length; i++){
             let exercise = recs[i];
             if (exercise){
-                temp.push(<ExerciseCard id={i} classNamer="rec" name={exercise.name} exercise={exercise} user={props.user} 
-                type={exercise.type} muscle={exercise.muscle} equipment={exercise.equipment} difficulty={exercise.difficulty} instructions={exercise.instructions}/>
-            );
+                temp.push(
+                    {
+                        "name": exercise.name,
+                        "src": rec_covers[i],
+                        "alt": `img ${i}`,
+                        "equipment": exercise.equipment,
+                        "instructions": exercise.instructions,
+                        "difficulty": exercise.difficulty,
+                        "muscle": exercise.muscle,
+                        "type": exercise.type
+                    }
+                )
             };
         };
         new_cards = temp;
@@ -326,7 +343,7 @@ function Recommendations(props) {
     return (
         <>
         <div id="recommendation-container">
-            {cards}
+            <Carousel data={cards} user={user}/>
         </div>
         </>
     )

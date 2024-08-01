@@ -7,16 +7,39 @@
     overflow: scroll;
 }
 
-.home-header{
-    margin-left: 20px;
-}
-
 .home-menu{
     display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.home-header{
+    font-size: 1.5em;
+    margin: 0.5em;
 }
 
 .create{
-    margin-left: 10px;
-    height: fit-content;
     align-self: center;
+    position: absolute;
+    right: 15px;
+}
+
+.home-section{
+    width: 95%;
+    align-self: center;
+    outline: 2px solid white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+    background: rgb(32, 32, 32);
+    border-radius: 20px;
+    background-image: linear-gradient(135deg, rgba(234, 234, 234,0.06) 0%, rgba(234, 234, 234,0.06) 
+    50%,rgba(169, 169, 169,0.06) 50%, rgba(169, 169, 169,0.06) 100%),linear-gradient(90deg, rgb(20,20,20),rgb(20,20,20)); 
+    background-size: 72px 72px;
+}
+
+#f-meals-section{
+    margin-bottom: 120px;
 }
