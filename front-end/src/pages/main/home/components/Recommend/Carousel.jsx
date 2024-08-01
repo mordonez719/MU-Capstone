@@ -36,8 +36,8 @@ function Carousel (props) {
             className={slide === idx ? "slide slide-active" : "slide slide-hidden"}>
                 <caption className="slide-caption-all">
                     <section className="slide-caption">
-                        <h2 className="slide-title">{item.name}</h2>
-                        <p className="slide-info">{item.type} | {item.muscle} | {item.difficulty}</p>
+                        <h1 className="slide-title">{item.name}</h1>
+                        <h3 className="slide-info">{item.type} | {item.muscle} | {item.difficulty}</h3>
                     </section>
                     <WorkoutDropdown user={props.user} exName={item.name} classNamer="rec"
                     type={item.type} muscle={item.muscle} equipment={item.equipment} difficulty={item.difficulty} instructions={item.instructions}/>
