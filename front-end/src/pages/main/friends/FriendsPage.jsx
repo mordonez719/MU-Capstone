@@ -64,7 +64,7 @@ function FriendsPage(props){
     make_cards(friends, friend_cards, "friend");
 
     return (
-        <>
+        <div id="friend-menu">
         <h2>Manage Friends Here</h2>
         <div id="user-search-container">
             <UserResults user={user} sent={sent} received={received} friends={friends}/>
@@ -89,7 +89,7 @@ function FriendsPage(props){
                 {friend_cards}
             </section>
         </section>
-        </>
+        </div>
     )
 }
 

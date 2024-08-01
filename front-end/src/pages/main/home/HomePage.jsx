@@ -54,7 +54,6 @@ function HomePage(props) {
 
     return (
         <div id="home-content">
-            <br></br>
             <div className="home-menu">
                 <h3 className='home-header'>Recommended For You: </h3>
             </div>
