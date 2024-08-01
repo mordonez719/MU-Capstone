@@ -13,6 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-self: end;
+    margin-right: 20px;
 }
 
 .add-to-wk{

@@ -327,7 +327,12 @@ function Recommendations(props) {
                     {
                         "name": exercise.name,
                         "src": rec_covers[i],
-                        "alt": `img ${i}`
+                        "alt": `img ${i}`,
+                        "equipment": exercise.equipment,
+                        "instructions": exercise.instructions,
+                        "difficulty": exercise.difficulty,
+                        "muscle": exercise.muscle,
+                        "type": exercise.type
                     }
                 )
             };
@@ -338,7 +343,7 @@ function Recommendations(props) {
     return (
         <>
         <div id="recommendation-container">
-            <Carousel data={cards} />
+            <Carousel data={cards} user={user}/>
         </div>
         </>
     )

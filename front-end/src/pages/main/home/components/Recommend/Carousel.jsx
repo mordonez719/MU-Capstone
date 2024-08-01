@@ -11,6 +11,7 @@ Called In: Recommendations
 */
 
 import React, { useState } from "react";
+import WorkoutDropdown from "../../../workouts/components/WorkoutDropdown";
 import "./Carousel.css";
 
 function Carousel (props) {
@@ -32,9 +33,14 @@ function Carousel (props) {
       {data.map((item, idx) => {
         return (
             <div style={{backgroundImage: `url(${item.src})`}} key={idx}
-            className={slide === idx ? "slide" : "slide slide-hidden"}>
-                <caption className="slide-caption">
-                    <h2 className="slide-title">{item.name}</h2>
+            className={slide === idx ? "slide slide-active" : "slide slide-hidden"}>
+                <caption className="slide-caption-all">
+                    <section className="slide-caption">
+                        <h2 className="slide-title">{item.name}</h2>
+                        <p className="slide-info">{item.type} | {item.muscle} | {item.difficulty}</p>
+                    </section>
+                    <WorkoutDropdown user={props.user} exName={item.name} classNamer="rec"
+                    type={item.type} muscle={item.muscle} equipment={item.equipment} difficulty={item.difficulty} instructions={item.instructions}/>
                 </caption>
             </div>
         );
