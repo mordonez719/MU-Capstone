@@ -15,7 +15,7 @@ import MealResults from "./components/MealResults"
 function MealsPage(props){
     return (
         <div id="meal-container">
-        <h2>Find Meal Plans Here</h2>
+        <h2>Find Meals</h2>
         <MealResults user={props.user}/>
         </div>
     )

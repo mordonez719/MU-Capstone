@@ -105,7 +105,8 @@ function MealResults(props){
     for (let i = 0; i < apiData.length && i < 11; i++){
         let meal = apiData[i];
         if (meal){
-            meals.push(<MealCard id={i} name={meal.recipe.label} calories={parseInt(meal.recipe.calories)} img={meal.recipe.image} user={props.user}>
+            console.log(meal)
+            meals.push(<MealCard id={i} name={meal.recipe.label} recipe={meal.recipe} calories={parseInt(meal.recipe.calories)} img={meal.recipe.image} user={props.user}>
                 </MealCard>);
         };
     };
