@@ -15,7 +15,7 @@ import ExerciseResults from "./components/ExerciseResults"
 function WorkoutsPage(props){
     return (
         <div id="wk-container">
-        <h2>Create Workouts Here</h2>
+        <h2>Find Exercises</h2>
         <ExerciseResults user={props.user} setSearchChange={props.setSearchChange} searchChange={props.searchChange}/>
         </div>
     )

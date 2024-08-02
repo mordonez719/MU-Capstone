@@ -1,11 +1,13 @@
 #api-exercises{
     height: 90%;
     width: 75%;
-    outline: 2px dashed #ddcfff;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: scroll;
+    outline: 1px solid white;
+    border-radius: 15px;
+    margin-bottom: 120px;
 }
 
 #menu{

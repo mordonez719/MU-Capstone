@@ -5,14 +5,13 @@ Recommendations.jsx
 Generates and displays exercise recommendations based on
 collected user data.
 
-Calls: ExerciseCard
+Calls: Carousel
 Called In: HomePage
 
 */
 
 import './Recommendations.css'
 import { useState, useEffect } from 'react'
-import ExerciseCard from '../../../workouts/components/ExerciseCard'
 import Carousel from './Carousel'
 
 function Recommendations(props) {

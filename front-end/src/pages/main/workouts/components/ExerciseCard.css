@@ -1,13 +1,44 @@
 .exercise-card-back{
-    background-color: #ddcfff;
+    border: 2px solid rgb(221, 207, 255);
     width: 90%;
     margin: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
+    height: 115px;
+    transition: height 0.5s ease-in-out;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 1px rgb(50, 50, 50);
+}
+
+.some-detail{
+    width: fit-content;
+    margin-left: 20px;
+    margin-top: 0;
 }
 
 .ex-name{
-    color: black;
-    margin-left: 5%;
+    width: fit-content;
+    margin-left: 20px;
+}
+
+.exercise-card-back:hover .details-view {
+    opacity: 1;
+}
+
+.exercise-card-back:hover {
+    height: 300px;
+    padding-bottom: 15px;
+}
+
+.details-view {
+    text-align: -webkit-left;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+    overflow-y: scroll;
+    border-top: 2px solid #ddcfff;
+    box-shadow: 0 -2px 4px rgba(221, 207, 255, 0.5)
 }
