@@ -67,7 +67,7 @@ function WorkoutModal(props){
     for (let i = 0; i < exercises.length; i++){
         let exercise = exercises[i];
         if (exercise){
-            wk_exercises.push(<ExerciseDisplay id={i} name={exercise.name}/>);
+            wk_exercises.push(<ExerciseDisplay id={i} name={exercise.name} instructions={exercise.instructions}/>);
         };
     };
 

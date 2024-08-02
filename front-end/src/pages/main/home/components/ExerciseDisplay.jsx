@@ -10,11 +10,18 @@ Called In: WorkoutModal
 */
 
 import './ExerciseDisplay.css'
+import { useState } from 'react'
 
 function ExerciseDisplay(props) {
+    const [instruct, toggleInstruct] = useState(0)
+    
+
     return (
         <>
-        <section className='ex-display-container'>{props.name}</section>
+        <section className='ex-display-container' onClick={() => toggleInstruct(!instruct)}>
+            <p className='ex-name'>{props.name}</p>
+            {instruct ? <p>Instructions: {props.instructions} </p>: ""}
+        </section>
         </>
     )
 }

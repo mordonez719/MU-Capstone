@@ -1,6 +1,11 @@
 .ex-display-container{
     background-color: rgb(187, 163, 252);
     width: 75%;
+    height: 100px;
     padding: 5px;
     margin: 10px;
+}
+
+.ex-display-details{
+    overflow-y: scroll;
 }
