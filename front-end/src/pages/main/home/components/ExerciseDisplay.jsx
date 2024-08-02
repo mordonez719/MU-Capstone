@@ -20,7 +20,13 @@ function ExerciseDisplay(props) {
         <>
         <section className='ex-display-container' onClick={() => toggleInstruct(!instruct)}>
             <p className='ex-name'>{props.name}</p>
-            {instruct ? <p>Instructions: {props.instructions} </p>: ""}
+            {instruct ? 
+            <>
+            <p>Instructions: {props.instructions}</p>
+            <span class="material-symbols-outlined" id="drop-arrow">arrow_drop_up</span>            
+            </>
+            :
+            <span class="material-symbols-outlined" id="drop-arrow">arrow_drop_down</span>}
         </section>
         </>
     )

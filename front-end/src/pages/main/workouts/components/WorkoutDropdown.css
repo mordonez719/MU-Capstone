@@ -15,6 +15,9 @@
     align-items: center;
     justify-self: end;
     margin-right: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
 }
 
 .add-to-wk{
