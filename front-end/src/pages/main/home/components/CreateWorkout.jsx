@@ -6,6 +6,8 @@ Displays a form for the user to add a new workouts to their
 library. Asks for the workout's title and description and
 makes a post to the database.
 
+HTML % CSS from uiverse - https://uiverse.io/gharsh11032000/bitter-cow-59
+
 Calls: 
 Called In: HomePage
 
@@ -42,20 +44,21 @@ function CreateWorkout(props){
 
     return (props.form) ? (
     <>
-        <section id="wk-form-container">
+        <div class="form-container">
             New Workout
             <button id="close-form" onClick={() => props.setForm(0)}>X</button>
-            <form id="wk-form" onSubmit={handleSubmit}>
-                <div id="wk-ins">
-                    <label for="wk-title">Title: </label>
-                    <input type="text" id="wk-title" name="wk-title"/>
-                        <br/><br/>
-                    <label for="desc">Description: </label>
-                    <input type="text" id="desc" name="desc"/>
+            <form class="form" onSubmit={handleSubmit}>
+                <div class="form-group">
+                    <label for="wk-title">Workout Title</label>
+                    <input type="text" id="wk-title" name="wk-title" required="" />
                 </div>
-                <input type="submit" value="Submit"/>
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <textarea name="desc" id="desc" rows="10" cols="50" required="" />
+                </div>
+                <button class="form-submit-btn" type="submit">Submit</button>
             </form>
-        </section>
+        </div>
     </>
     ) : ""
 }

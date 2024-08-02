@@ -6,6 +6,8 @@ Displays a form for the user to add a new meal plans to their
 library. Asks for the meal plan's title and description and
 makes a post to the database.
 
+HTML % CSS from uiverse - https://uiverse.io/gharsh11032000/bitter-cow-59
+
 Calls: 
 Called In: HomePage
 
@@ -41,20 +43,21 @@ function CreatePlan(props){
 
     return (props.form) ? (
     <>
-        <section id="plan-form-container">
+        <div class="form-container">
             New Meal Plan
             <button id="close-form" onClick={() => props.setForm(0)}>X</button>
-            <form id="plan-form" onSubmit={handleSubmit}>
-                <div id="plan-ins">
-                    <label for="plan-title">Title: </label>
-                    <input type="text" id="plan-title" name="plan-title"/>
-                        <br/><br/>
-                    <label for="desc">Description: </label>
-                    <input type="text" id="desc" name="desc"/>
+            <form class="form" onSubmit={handleSubmit}>
+                <div class="form-group">
+                    <label for="plan-title">Meal Plan Title</label>
+                    <input type="text" id="plan-title" name="plan-title" required="" />
                 </div>
-                <input type="submit" value="Submit"/>
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <textarea name="desc" id="desc" rows="10" cols="50" required="" />
+                </div>
+                <button class="form-submit-btn" type="submit">Submit</button>
             </form>
-        </section>
+        </div>
     </>
     ) : ""
 }
