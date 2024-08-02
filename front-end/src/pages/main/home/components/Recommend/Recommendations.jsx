@@ -51,10 +51,35 @@ function Recommendations(props) {
             },
         })
         const data = await response.json()
-        setHistory(data.exSearches) // recent queries
-        setExTypes(data.exTypes) // recent type filters
-        setMuscles(data.muscles) // recent muscle filters
-        setDiffs(data.difficulties) // recent difficulty filters
+
+        setHistory(
+            data.exSearches.map((search) => {
+                return (
+                  search.content
+                )
+            }).splice(0, 5)
+        ) // recent queries
+        setExTypes(
+            data.exTypes.map((search) => {
+                return (
+                  search.content
+                )
+            }).splice(0, 5)
+        ) // recent type filters
+        setMuscles(
+            data.muscles.map((search) => {
+                return (
+                  search.content
+                )
+            }).splice(0, 5)
+        ) // recent muscle filters
+        setDiffs(
+            data.difficulties.map((search) => {
+                return (
+                  search.content
+                )
+            }).splice(0, 5)
+        ) // recent difficulty filters
     };
 
     // get names of exercises previously added by user

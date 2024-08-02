@@ -23,10 +23,38 @@ model User {
   received User[] @relation("UserRequests")
   friends User[] @relation("friends")
   friendOf User[] @relation("friends")
-  exSearches String[] @default([])
-  exTypes String[] @default([])
-  muscles String[] @default([])
-  difficulties String[] @default([])
+  exSearches Search[]
+  exTypes Type[]
+  muscles Muscle[]
+  difficulties Difficulty[]
+}
+
+model Search {
+  id       Int     @id @default(autoincrement())
+  content  String
+  username String
+  user User @relation(fields: [username], references: [user])
+}
+
+model Type {
+  id       Int     @id @default(autoincrement())
+  content  String
+  username String
+  user User @relation(fields: [username], references: [user])
+}
+
+model Muscle {
+  id       Int     @id @default(autoincrement())
+  content  String
+  username String
+  user User @relation(fields: [username], references: [user])
+}
+
+model Difficulty {
+  id       Int     @id @default(autoincrement())
+  content  String
+  username String
+  user User @relation(fields: [username], references: [user])
 }
 
 model Workout {

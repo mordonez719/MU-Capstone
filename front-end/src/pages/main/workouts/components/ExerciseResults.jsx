@@ -85,10 +85,10 @@ function ExerciseResults(props){
                 "Content-Type": "application/json",
                 },
             body: JSON.stringify({
-                "newSearch": query,
-                "type": type,
-                "muscle": muscle,
-                "difficulty": difficulty
+                "newSearchIn": query,
+                "typeIn": type,
+                "muscleIn": muscle,
+                "difficultyIn": difficulty
                 }),
         }
         )

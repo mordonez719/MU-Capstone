@@ -74,7 +74,30 @@ app.post("/logout", async (req, res) => {
 app.get('/user/data', async (req, res) => {
     const user = await prisma.user.findUnique({
         where: { user: currentUser},
-    });
+        include: {
+            exSearches: {
+                orderBy: {
+                    id: 'desc',
+                }
+            },
+            exTypes: {
+                orderBy: {
+                    id: 'desc',
+                }
+            },
+            muscles: {
+                orderBy: {
+                    id: 'desc',
+                }
+            },
+            difficulties: {
+                orderBy: {
+                    id: 'desc',
+                }
+            }
+        },
+    }
+);
     res.status(200).json(user);
 });
 
@@ -406,125 +429,36 @@ app.get('/friendlist', async (req, res) => {
 
 // adds a new exercise search to a user's kept history
 app.put('/search/exercise', async (req, res) => {
-    const { newSearch, type, muscle, difficulty } = req.body;
+    const { newSearchIn, typeIn, muscleIn, difficultyIn } = req.body;
+    const newSearch = await prisma.search.create({
+        data: {
+            content: newSearchIn,
+            username: currentUser
+        }
+    })
+    const type = await prisma.type.create({
+        data: {
+            content: typeIn,
+            username: currentUser
+        }
+    })
+    const muscle = await prisma.muscle.create({
+        data: {
+            content: muscleIn,
+            username: currentUser
+        }
+    })
+    const difficulty = await prisma.difficulty.create({
+        data: {
+            content: difficultyIn,
+            username: currentUser
+        }
+    })
     let updatedCurrent = await prisma.user.findUnique({
         where: {user: currentUser}
     })
-    if (updatedCurrent.exSearches.length < 5) { // if there are less than 5 recent searches, push a new one
-        updatedCurrent = await prisma.user.update({
-            where: {user: currentUser},
-            data: {
-                exSearches: {
-                    "push": newSearch
-                },
-                exTypes: {
-                    "push": type
-                },
-                muscles: {
-                    "push": muscle
-                },
-                difficulties: {
-                    "push": difficulty
-                }
-            }
-        })
-    } else { // if there are already five searches, keep the most recent four and add the new one
-        updatedCurrent = await prisma.user.update({
-            where: {user: currentUser},
-            data: {
-                exSearches: {
-                    "set": [...updatedCurrent.exSearches.slice(1), newSearch]
-                },
-                exTypes: {
-                    "set": [...updatedCurrent.exTypes.slice(1), type]
-                },
-                muscles: {
-                    "set": [...updatedCurrent.muscles.slice(1), muscle]
-                },
-                difficulties: {
-                    "set": [...updatedCurrent.difficulties.slice(1), difficulty]
-                }
-            }
-        })
-    }
     res.status(200).json(updatedCurrent);
 })
-
-// adds a new meal search to a user's kept history
-app.put('/search/meal', async (req, res) => {
-    const { newSearch, newDiets, newHealths, newTypes, min, max } = req.body;
-    let updatedCurrent = await prisma.user.findUnique({
-        where: {user: currentUser}
-    })
-    if (updatedCurrent.mealSearches.length < 5) { // if there are less than 5 recent searches, push a new one
-        updatedCurrent = await prisma.user.update({
-            where: {user: currentUser},
-            data: {
-                mealSearches: {
-                    "push": newSearch
-                },
-                diets: {
-                    "push": newDiets
-                },
-                healths: {
-                    "push": newHealths
-                },
-                dishTypes: {
-                    "push": newTypes
-                },
-                caloricMin: {
-                    "push": min
-                },
-                caloricMax: {
-                    "push": max
-                }
-            }
-        })
-    } else { // if there are already five searches, keep recent data and add new data
-        updatedCurrent = await prisma.user.update({
-            where: {user: currentUser},
-            data: {
-                mealSearches: {
-                    "set": [...updatedCurrent.mealSearches.slice(1), newSearch]
-                },
-                diets: { // since you can check multiple diets, keep 4 recently selected instead of 4 sets
-                    "set": [...updatedCurrent.diets.slice(-5), ...newDiets]
-                },
-                healths: {
-                    "set": [...updatedCurrent.healths.slice(-5), ...newHealths]
-                },
-                dishTypes: {
-                    "set": [...updatedCurrent.dishTypes.slice(-5), ...newTypes]
-                },
-                caloricMin: {
-                    "set": [...updatedCurrent.caloricMin.slice(1), min]
-                },
-                caloricMax: {
-                    "set": [...updatedCurrent.caloricMax.slice(1), max]
-                }
-            }
-        })
-    }
-    res.status(200).json(updatedCurrent);
-})
-
-// retrieves user's recent exercise search history
-app.post('/history/exercise', async (req, res) => {
-    const {username} = req.body
-    const user = await prisma.user.findUnique({
-        where: { user: username}
-    });
-    res.status(200).json(user.exSearches);
-});
-
-// retrieves user's recent meal search history
-app.post('/history/meal', async (req, res) => {
-    const {username} = req.body
-    const user = await prisma.user.findUnique({
-        where: { user: username}
-    });
-    res.status(200).json(user.mealSearches);
-});
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
