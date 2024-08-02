@@ -108,7 +108,7 @@ function UserCard(props){
 
 
     return(
-        <section className='user-back'>
+        <section className={props.class ? "searched" : 'user-back'}>
             <section id="result-username">
                 <h4 id="result-user">{props.name}</h4>
             </section>

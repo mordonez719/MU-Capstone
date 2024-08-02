@@ -47,7 +47,7 @@ function UserResults(){
 
     // populates result display if a user was found
     if (found){
-        friend = <UserCard name={found.user} status={relation}/>
+        friend = <UserCard class="searched" name={found.user} status={relation}/>
     }
 
     return (

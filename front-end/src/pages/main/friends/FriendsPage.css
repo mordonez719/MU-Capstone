@@ -20,6 +20,8 @@
     outline: 2px solid rgb(187, 163, 252);
     height: 100%;
     width: 48%;
+    display: flex;
+    flex-direction: column;
 }
 
 #friends-container{
@@ -32,7 +34,6 @@
 
 .request-cards{
     width: 95%;
-    overflow: scroll;
     align-self: center;
     margin-top: 15px;
     height: 95%;
