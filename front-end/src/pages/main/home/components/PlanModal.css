@@ -4,15 +4,15 @@
     position: absolute;
     right: 25%;
     top: 25%;
-    background-color: #ddcfff;
-    outline: 1px solid black;
+    background-image: linear-gradient(45deg, transparent 0%, transparent 55%,rgba(81,108,125, 0.04) 55%, rgba(81,108,125, 0.04) 76%,transparent 76%, transparent 100%),linear-gradient(135deg, transparent 0%, transparent 14%,rgba(81,108,125, 0.04) 14%, rgba(81,108,125, 0.04) 41%,transparent 41%, transparent 100%),linear-gradient(45deg, transparent 0%, transparent 2%,rgba(81,108,125, 0.04) 2%, rgba(81,108,125, 0.04) 18%,transparent 18%, transparent 100%),linear-gradient(135deg, transparent 0%, transparent 61%,rgba(81,108,125, 0.04) 61%, rgba(81,108,125, 0.04) 71%,transparent 71%, transparent 100%),linear-gradient(90deg, rgb(228,226,250),rgb(228,226,250));
+    border-radius: 20px;
     z-index: 1;
 }
 
 #close-modal{
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 15px;
+    top: 15px;
     font-size: xx-small;
     width: fit-content;
     height: fit-content;
@@ -38,7 +38,7 @@
     width: 80%;
     margin-left: 10%;
     outline: 2px solid rgb(187, 163, 252);
-    height: 50%;
+    height: 55%;
     overflow: scroll;
     display: flex;
     flex-direction: column;
