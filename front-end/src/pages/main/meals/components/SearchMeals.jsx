@@ -96,7 +96,7 @@ function SearchMeals(props) {
                 </section>
                 {menu ? 
                     <section id="filter-menu">
-                        ALL FILTERS HERE
+                        Filter Meals
                         <section id="all-filters">
                             <div className="diet-type"> Diet:
                                 {diet_checks}                        

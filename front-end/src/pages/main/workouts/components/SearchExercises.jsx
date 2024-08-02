@@ -89,7 +89,7 @@ function SearchExercises(props) {
                 </section>
                 {menu ? 
                     <section id="filter-menu">
-                        ALL FILTERS HERE
+                        Filter Exercises
                         <section id="all-filters">
                             <div className="exercise-type"> Types
                                 {type_radios}                        

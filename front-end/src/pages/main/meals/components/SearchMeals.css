@@ -21,18 +21,6 @@
     margin-left: 41%;
 }
 
-#filter-menu{
-    display: flex;
-    width: 90%;
-    height: fit-content;
-    background-color: rgb(250, 224, 255);
-    outline: 1px solid black;
-    box-shadow: 1px 1px 6px 5px rgb(220, 220, 220, 0.4);
-    align-self: center;
-    color: black;
-    flex-direction: column;
-}
-
 #all-filters{
     display: flex;
     justify-content: space-evenly;
